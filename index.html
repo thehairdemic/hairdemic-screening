@@ -1,299 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hairdemic Screening™</title>
-  <style>
-    :root{--bg:#07080d;--card:#111622;--card2:#171d2b;--text:#ffffff;--muted:#b8bfd1;--pink:#ff2fb3;--cyan:#22e7ff;--line:#2b3347}
-    *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;background:radial-gradient(circle at top left,rgba(255,47,179,.25),transparent 30%),radial-gradient(circle at bottom right,rgba(34,231,255,.18),transparent 32%),var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:20px}
-    .app{max-width:920px;margin:auto;background:linear-gradient(180deg,var(--card),#0b0e15);border:1px solid rgba(255,255,255,.08);border-radius:30px;padding:28px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
-    .badge{display:inline-block;border:1px solid rgba(34,231,255,.4);color:var(--cyan);padding:8px 12px;border-radius:999px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
-    h1{font-size:clamp(40px,7vw,78px);line-height:.95;margin:10px 0 18px}
-    h2{font-size:clamp(26px,5vw,44px);line-height:1.05;margin:10px 0 18px}
-    h3{font-size:22px;margin:18px 0 8px}
-    p{color:var(--muted);font-size:18px;line-height:1.55}
-    .highlight{background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;font-weight:900}
-    .statement{font-size:24px;color:white;font-weight:800;line-height:1.3;margin:22px 0}
-    button{width:100%;padding:16px;border-radius:16px;border:1px solid var(--line);background:var(--card2);color:var(--text);font-size:16px;font-weight:700;cursor:pointer;margin:8px 0}
-    button:hover{border-color:var(--cyan)}
-    .main{background:linear-gradient(90deg,var(--pink),var(--cyan));color:#05060a;border:0}
-    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .row button{flex:1;min-width:160px}
-    .progressMeta{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
-    .progress{height:10px;background:#22293a;border-radius:999px;overflow:hidden;margin-bottom:28px}
-    .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:.25s}
-    .resultsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
-    .metric{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:18px}
-    .metric strong{display:block;font-size:34px;margin-top:6px}
-    .bar{height:9px;background:#252d3f;border-radius:999px;margin-top:12px;overflow:hidden}
-    .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--cyan))}
-    .index{font-size:90px;line-height:1;font-weight:900;letter-spacing:-.06em;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;margin:10px 0}
-    .box{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:18px;margin:18px 0}
-    .small{font-size:14px;color:var(--muted)}
-    .analysisWrap{margin-top:18px}
-    .analysisItem{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-      margin:10px 0;
-      color:var(--muted);
-      font-size:18px;
-    }
-    .analysisItem strong{color:white}
-    .pulse{
-      width:72px;
-      height:72px;
-      border-radius:50%;
-      margin:20px auto;
-      background:linear-gradient(90deg,var(--pink),var(--cyan));
-      animation:pulse 1.3s infinite;
-    }
-    @keyframes pulse{
-      0%{transform:scale(.95);opacity:.7}
-      50%{transform:scale(1.08);opacity:1}
-      100%{transform:scale(.95);opacity:.7}
-    }
-    @media(max-width:700px){.app{padding:22px}.resultsGrid{grid-template-columns:1fr}.index{font-size:70px}h1{font-size:42px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hairdemic Screening™</title>
+<style>
+:root{--bg:#07080d;--card:#101522;--card2:#171d2c;--text:#fff;--muted:#b8bfd1;--pink:#ff2fb3;--cyan:#22e7ff;--gold:#f5c84b;--line:#2b3347}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at top left,rgba(255,47,179,.22),transparent 30%),radial-gradient(circle at bottom right,rgba(34,231,255,.16),transparent 35%),var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:18px}
+.app{max-width:960px;margin:auto;background:linear-gradient(180deg,var(--card),#090b12);border:1px solid rgba(255,255,255,.08);border-radius:30px;padding:28px;box-shadow:0 28px 90px rgba(0,0,0,.5);animation:fadeIn .45s ease}
+.screen{animation:slideUp .35s ease}
+.badge{display:inline-block;border:1px solid rgba(34,231,255,.42);color:var(--cyan);padding:8px 13px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;box-shadow:0 0 18px rgba(34,231,255,.12)}
+h1{font-size:clamp(42px,7vw,82px);line-height:.92;margin:10px 0 18px}
+h2{font-size:clamp(26px,4vw,42px);line-height:1.06;margin:10px 0 18px}
+h3{font-size:22px;margin:18px 0 8px}
+p{color:var(--muted);font-size:18px;line-height:1.55}
+.hero p{max-width:780px}
+.glow{background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;font-weight:900;text-shadow:0 0 38px rgba(255,47,179,.15)}
+.statement{font-size:26px;color:#fff;font-weight:900;margin:20px 0}
+.box{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:22px;padding:20px;margin:18px 0}
+button{width:100%;padding:16px;border-radius:17px;border:1px solid var(--line);background:var(--card2);color:#fff;font-size:16px;font-weight:800;cursor:pointer;margin:8px 0}
+button:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,231,255,.08)}
+.main{background:linear-gradient(90deg,var(--pink),var(--cyan));color:#05060a;border:0;box-shadow:0 0 24px rgba(255,47,179,.16)}
+.progressMeta{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.progress{height:10px;background:#22293a;border-radius:999px;overflow:hidden;margin-bottom:28px}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:.25s}
+.row{display:flex;gap:12px;flex-wrap:wrap}.row button{flex:1;min-width:160px}
+.center{text-align:center}
+.index{font-size:clamp(110px,18vw,190px);line-height:.85;font-weight:900;letter-spacing:-.08em;background:linear-gradient(90deg,var(--pink),#8a4dff,var(--cyan));-webkit-background-clip:text;color:transparent;margin:20px 0;text-shadow:0 0 40px rgba(255,47,179,.18)}
+.exposure{font-size:clamp(28px,5vw,48px);font-weight:900;color:#fff;margin:0 0 24px}
+.resultIntro{max-width:760px;margin:0 auto 26px;text-align:left}
+.breakdown{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin:20px 0}
+.panel{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:24px;padding:22px}
+.meter{display:grid;grid-template-columns:1fr 60px;gap:14px;align-items:center;margin:18px 0}
+.meter strong{font-size:28px;color:#fff;text-align:right}
+.track{height:12px;background:#252d3f;border-radius:999px;overflow:hidden;margin-top:8px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--cyan));border-radius:999px;transition:width 1.2s ease}
+.small{font-size:14px;color:var(--muted)}
+.gold{color:var(--gold)}
+.join{border-color:rgba(245,200,75,.38);background:linear-gradient(180deg,rgba(245,200,75,.08),rgba(255,255,255,.035))}
+.pulse{width:76px;height:76px;border-radius:50%;margin:22px auto;background:linear-gradient(90deg,var(--pink),var(--cyan));animation:pulse 1.3s infinite}
+.analysisItem{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0;color:var(--muted);font-size:18px}
+.analysisItem strong{color:white}
+.shareCard{border:1px solid rgba(34,231,255,.35);border-radius:24px;background:linear-gradient(160deg,rgba(255,47,179,.12),rgba(34,231,255,.09));padding:22px;text-align:center;margin:18px 0;box-shadow:0 0 35px rgba(34,231,255,.08)}
+.shareCard h2{color:#fff;margin-bottom:4px}
+.shareCard .shareScore{font-size:78px;font-weight:900;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;line-height:.95}
+@keyframes pulse{0%{transform:scale(.95);opacity:.7}50%{transform:scale(1.08);opacity:1}100%{transform:scale(.95);opacity:.7}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){.app{padding:22px}.breakdown{grid-template-columns:1fr}.meter{grid-template-columns:1fr}.meter strong{text-align:left}.index{font-size:100px}}
+</style>
 </head>
 <body>
-  <main class="app" id="app"></main>
+<main class="app" id="app"></main>
 <script>
-const questions=[
-{q:"How often do you have your hair professionally done?",section:"Hair History",type:"none",options:["Weekly","Every 2 weeks","Monthly","Every few months","Rarely"]},
-{q:"Do you currently have one hairstylist you consistently book with?",section:"Hair History",type:"none",options:["Yes","No"]},
-{q:"Approximately how many different hairstylists have you used in the past 5 years?",section:"Hair History",type:"none",options:["1","2–3","4–6","7+"]},
-{q:"What type of services do you get most often?",section:"Hair History",type:"none",options:["Silk Press","Braids","Sew-in / Extensions","Wigs","Color","Natural Hair","Locs","Other"]},
-{q:"How often do you leave hair appointments feeling disappointed?",section:"Hair Experience",type:"trust",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel nervous before trying a new hairstylist?",section:"Hair Experience",type:"trust",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel like you have to hope for the best when booking an appointment?",section:"Hair Experience",type:"trust",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel like every hairstylist has different expectations policies or rules?",section:"Hair Experience",type:"consistency",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel confused about what a hair appointment will include before you arrive?",section:"Hair Experience",type:"consistency",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often have you switched hairstylists because of a negative experience?",section:"Hair Experience",type:"trust",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel like getting your hair done is emotionally exhausting?",section:"Hair Experience",type:"trust",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"Overall how satisfied are you with your experiences in today’s hair industry?",section:"Hair Experience",type:"trust",options:["Very satisfied","Somewhat satisfied","Neutral","Somewhat dissatisfied","Very dissatisfied"]},
-{q:"How often does your hair appointment include a shampoo before styling?",section:"Hair Care",type:"hairCareReverse",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often does your stylist discuss the health of your hair before recommending a style?",section:"Hair Care",type:"hairCareReverse",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often does your stylist explain why they recommend certain products treatments or services?",section:"Hair Care",type:"hairCareReverse",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you leave your appointment knowing how to maintain your hair until your next visit?",section:"Hair Care",type:"hairCareReverse",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel your hair health is prioritized just as much as the final style?",section:"Hair Care",type:"hairCareReverse",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"Who do you believe is primarily responsible for maintaining the health of your hair?",section:"Hair Care",type:"hairCare",options:["Mostly me","Shared equally between me and my stylist","Mostly my hairstylist","I’m not sure"]},
-{q:"How often have you been surprised by the final cost of a hair appointment?",section:"Industry Experience",type:"consistency",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel like every hairstylist has different booking cancellation or deposit policies?",section:"Industry Experience",type:"consistency",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel unsure whether you're booking the correct service?",section:"Industry Experience",type:"consistency",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel like you have to research a hairstylist extensively before feeling comfortable booking?",section:"Industry Experience",type:"trust",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often have you avoided booking an appointment because the process felt overwhelming?",section:"Industry Experience",type:"trust",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"How often do you feel like finding a good hairstylist depends more on luck than a reliable system?",section:"Industry Experience",type:"consistency",options:["Never","Rarely","Sometimes","Often","Almost Always"]},
-{q:"Overall do you believe the modern hair industry provides a consistent experience for clients?",section:"Industry Experience",type:"consistency",options:["Strongly Agree","Agree","Neutral","Disagree","Strongly Disagree"]}
+const Q=[
+["How often do you have your hair professionally done?",["Weekly","Every 2 weeks","Monthly","Every few months","Rarely"],"none","Hair History"],
+["Do you currently have one hairstylist you consistently book with?",["Yes","No"],"none","Hair History"],
+["Approximately how many different hairstylists have you used in the past 5 years?",["1","2–3","4–6","7+"],"none","Hair History"],
+["What type of services do you get most often?",["Silk Press","Braids","Sew-in / Extensions","Wigs","Color","Natural Hair","Locs","Other"],"none","Hair History"],
+["How often do you leave hair appointments feeling disappointed?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Hair Experience"],
+["How often do you feel nervous before trying a new hairstylist?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Hair Experience"],
+["How often do you feel like you have to hope for the best when booking an appointment?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Hair Experience"],
+["How often do you feel like every hairstylist has different expectations policies or rules?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Hair Experience"],
+["How often do you feel confused about what a hair appointment will include before you arrive?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Hair Experience"],
+["How often have you switched hairstylists because of a negative experience?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Hair Experience"],
+["How often do you feel like getting your hair done is emotionally exhausting?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Hair Experience"],
+["Overall how satisfied are you with your experiences in today’s hair industry?",["Very satisfied","Somewhat satisfied","Neutral","Somewhat dissatisfied","Very dissatisfied"],"trust","Hair Experience"],
+["How often does your hair appointment include a shampoo before styling?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
+["How often does your stylist discuss the health of your hair before recommending a style?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
+["How often does your stylist explain why they recommend certain products treatments or services?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
+["How often do you leave your appointment knowing how to maintain your hair until your next visit?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
+["How often do you feel your hair health is prioritized just as much as the final style?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
+["Who do you believe is primarily responsible for maintaining the health of your hair?",["Mostly me","Shared equally between me and my stylist","Mostly my hairstylist","I’m not sure"],"hairCare","Hair Care"],
+["How often have you been surprised by the final cost of a hair appointment?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Industry Experience"],
+["How often do you feel like every hairstylist has different booking cancellation or deposit policies?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Industry Experience"],
+["How often do you feel unsure whether you're booking the correct service?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Industry Experience"],
+["How often do you feel like you have to research a hairstylist extensively before feeling comfortable booking?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Industry Experience"],
+["How often have you avoided booking an appointment because the process felt overwhelming?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Industry Experience"],
+["How often do you feel like finding a good hairstylist depends more on luck than a reliable system?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Industry Experience"],
+["Overall do you believe the modern hair industry provides a consistent experience for clients?",["Strongly Agree","Agree","Neutral","Disagree","Strongly Disagree"],"consistency","Industry Experience"]
 ];
+let current=-1,answers=[],scores={hairCare:[],trust:[],consistency:[]},lastResult=null;
+const app=document.getElementById("app");
 
-let current=-1;
-let answers=[];
-let scores={hairCare:[],trust:[],consistency:[]};
-
+function wrap(x){app.innerHTML=`<div class="screen">${x}</div>`}
 function home(){
-document.getElementById("app").innerHTML=`
+wrap(`<section class="hero">
 <div class="badge">Official Hairdemic Assessment™</div>
-<h1><span class="highlight">The cure is in our hands.</span></h1>
+<h1><span class="glow">The cure is in our hands.</span></h1>
 <p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p>
 <p>Most people learned to accept it.</p>
 <div class="statement">We didn't.</div>
 <p>Hairdemic is a movement committed to restoring hair care as the foundation of the modern hair industry through research education community and action.</p>
 <p>The Hairdemic Screening™ is the first step.</p>
-<div class="box">
-<p><strong>Measure your experience.</strong></p>
-<p><strong>Add your voice.</strong></p>
-<p><strong>Be part of the change.</strong></p>
-</div>
+<div class="box"><p><strong>Measure your experience.</strong></p><p><strong>Add your voice.</strong></p><p><strong>Be part of the change.</strong></p></div>
 <button class="main" onclick="start()">Take the First Step</button>
-<p class="small">Your experience matters. Your voice helps shape what comes next.</p>`;
+<p class="small">Begin the Hairdemic Screening™</p>
+</section>`);
 }
-
-function start(){
-current=0;
-scores={hairCare:[],trust:[],consistency:[]};
-answers=[];
-showQuestion();
+function start(){current=0;answers=[];scores={hairCare:[],trust:[],consistency:[]};showQ();}
+function showQ(){
+const q=Q[current],pct=Math.round((current/Q.length)*100);
+wrap(`<div class="progressMeta"><span>${q[3]}</span><span>Question ${current+1} of ${Q.length}</span></div>
+<div class="progress"><span style="width:${pct}%"></span></div>
+<div class="badge">${q[3]}</div>
+<h2>${q[0]}</h2>
+${q[1].map((o,i)=>`<button onclick="answer(${i})">${o}</button>`).join("")}
+<div class="row">${current>0?`<button onclick="back()">Back</button>`:""}</div>`);
 }
-
-function showQuestion(){
-const item=questions[current];
-const percent=Math.round((current/questions.length)*100);
-document.getElementById("app").innerHTML=`
-<div class="progressMeta"><span>${item.section}</span><span>Question ${current+1} of ${questions.length}</span></div>
-<div class="progress"><span style="width:${percent}%"></span></div>
-<div class="badge">${item.section}</div>
-<h2>${item.q}</h2>
-${item.options.map((option,index)=>`<button onclick="answer(${index})">${option}</button>`).join("")}
-<div class="row">${current>0?`<button onclick="back()">Back</button>`:""}</div>`;
+function back(){current--;showQ();}
+function answer(i){answers[current]=i;current++;current<Q.length?showQ():calc();}
+function score(q,i){let v=i*25;if(q[2]=="hairCareReverse")return 100-v;if(q[2]=="hairCare")return[80,20,35,65][i];return v}
+function calc(){scores={hairCare:[],trust:[],consistency:[]};Q.forEach((q,i)=>{if(q[2]=="none")return;let v=score(q,answers[i]);if(q[2].includes("hairCare"))scores.hairCare.push(v);else scores[q[2]].push(v)});analyze()}
+function analyze(){
+wrap(`<div class="center"><div class="badge">Analyzing Results</div><h1>Preparing your Hairdemic Impact Index™</h1><p>Your responses are being reviewed across the three core areas of the Hairdemic Screening™.</p><div class="pulse"></div><div class="analysisItem">✓ <strong>Hair Care Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Trust Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Consistency Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Primary Finding</strong> identified</div><p><strong>The cure is in our hands.</strong></p></div>`);
+setTimeout(results,1800);
 }
-
-function back(){
-current--;
-showQuestion();
+function avg(a){return Math.round(a.reduce((x,y)=>x+y,0)/a.length||0)}
+function exposure(s){return s<=20?"Minimal Hairdemic Exposure":s<=40?"Mild Hairdemic Exposure":s<=60?"Moderate Hairdemic Exposure":s<=80?"Significant Hairdemic Exposure":"Severe Hairdemic Exposure"}
+function primary(h,t,c){return h>=t&&h>=c?"Hair Care Displacement":t>=h&&t>=c?"Trust Breakdown":"Standardization Breakdown"}
+function text(f){if(f=="Hair Care Displacement")return"Your responses suggest that hair care has gradually become secondary to obtaining a hairstyle. This pattern appears throughout today's industry and is one of the core conditions Hairdemic is working to address.";if(f=="Trust Breakdown")return"Your responses suggest that repeated experiences have affected your confidence in booking communicating with or trusting hair professionals.";return"Your responses suggest that inconsistent pricing policies services and expectations have made the hair experience harder to navigate."}
+function countUp(el,end){let n=0,step=Math.max(1,Math.ceil(end/40));let timer=setInterval(()=>{n+=step;if(n>=end){n=end;clearInterval(timer)}el.textContent=n},24)}
+function meter(n,s,d){return`<div class="meter"><div><h3>${n}</h3><p class="small">${d}</p><div class="track"><div class="fill" data-width="${s}%"></div></div></div><strong class="miniScore" data-score="${s}">0</strong></div>`}
+function results(){
+let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);lastResult={h,t,c,total,f,exp:exposure(total)};
+wrap(`<div class="center"><div class="badge">Hairdemic Screening Results™</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div></div>
+<div class="resultIntro"><div class="box"><h3>Your experience isn't an isolated incident.</h3><p>Your Hairdemic Impact Index suggests your experience reflects patterns that have become increasingly common across today's hair industry.</p><p>This isn't about blaming clients or stylists. It's about recognizing a system that has become increasingly disconnected from hair care.</p><p><strong>This is why Hairdemic exists.</strong></p></div></div>
+<div class="breakdown"><div class="panel"><div class="badge">Assessment Breakdown</div>${meter("Hair Care Impact",h,"How much the industry's structure has affected your ability to consistently receive hair care as part of your experience.")}${meter("Trust Impact",t,"How much your confidence and sense of safety have been affected when choosing hair professionals.")}${meter("Consistency Impact",c,"How predictable or unpredictable your hair experiences have been across pricing policies services and expectations.")}<p class="small">Scores range from 0 lowest impact to 100 highest impact.</p></div><div class="panel"><div class="badge">Primary Finding</div><h2>${f}</h2><p>${text(f)}</p></div></div>
+<div class="shareCard" id="shareCard"><h2>My Hairdemic Impact Index™</h2><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
+<div class="box join"><h2>What Happens Next?</h2><p>You are now part of the first generation of Hairdemic.</p><p>Every completed screening helps document the state of today's hair industry.</p><p>Every story helps shape future research.</p><p>Every voice brings us closer to restoring hair care as the foundation of the industry.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Share My Results</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
+countUp(document.getElementById("mainScore"),total);
+document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));
+setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120);
 }
-
-function answer(index){
-answers[current]=index;
-current++;
-if(current<questions.length){showQuestion();}else{calculateResults();}
-}
-
-function scoreFromAnswer(item,index){
-let value=index*25;
-if(item.type==="hairCareReverse"){return 100-value;}
-if(item.type==="hairCare"){
-if(index===0)return 80;
-if(index===1)return 20;
-if(index===2)return 35;
-if(index===3)return 65;
-}
-return value;
-}
-
-function calculateResults(){
-scores={hairCare:[],trust:[],consistency:[]};
-questions.forEach((item,idx)=>{
-const answerIndex=answers[idx];
-if(item.type==="none")return;
-const value=scoreFromAnswer(item,answerIndex);
-if(item.type==="hairCareReverse"||item.type==="hairCare"){scores.hairCare.push(value);}
-else if(item.type==="trust"){scores.trust.push(value);}
-else if(item.type==="consistency"){scores.consistency.push(value);}
-});
-showAnalyzing();
-}
-
-function showAnalyzing(){
-document.getElementById("app").innerHTML=`
-<div class="badge">Analyzing Results</div>
-<h1>Preparing your Hairdemic Impact Index™</h1>
-<p>Your responses are being reviewed across the three core areas of the Hairdemic Screening™.</p>
-<div class="pulse"></div>
-<div class="analysisWrap">
-  <div class="analysisItem">✓ <strong>Hair Care Impact</strong> analyzed</div>
-  <div class="analysisItem">✓ <strong>Trust Impact</strong> analyzed</div>
-  <div class="analysisItem">✓ <strong>Consistency Impact</strong> analyzed</div>
-  <div class="analysisItem">✓ <strong>Primary Finding</strong> identified</div>
-</div>
-<p><strong>The cure is in our hands.</strong></p>
-`;
-setTimeout(showResults,2200);
-}
-
-function avg(arr){
-if(arr.length===0)return 0;
-return Math.round(arr.reduce((a,b)=>a+b,0)/arr.length);
-}
-
-function level(score){
-if(score<=20)return"Minimal Impact";
-if(score<=40)return"Mild Impact";
-if(score<=60)return"Moderate Impact";
-if(score<=80)return"Significant Impact";
-return"Severe Impact";
-}
-
-function primaryFinding(hairCare,trust,consistency){
-const items=[
-{name:"Hair Care Displacement",value:hairCare},
-{name:"Trust Breakdown",value:trust},
-{name:"Standardization Breakdown",value:consistency}
-];
-items.sort((a,b)=>b.value-a.value);
-return items[0].name;
-}
-
-function metric(name,score){
-return `<div class="metric"><span>${name}</span><strong>${score}</strong><div class="bar"><span style="width:${score}%"></span></div></div>`;
-}
-
-function exposure(score){
-  if(score <= 20) return "Minimal Hairdemic Exposure";
-  if(score <= 40) return "Mild Hairdemic Exposure";
-  if(score <= 60) return "Moderate Hairdemic Exposure";
-  if(score <= 80) return "Significant Hairdemic Exposure";
-  return "Severe Hairdemic Exposure";
-}
-
-function findingText(finding){
-  if(finding === "Hair Care Displacement"){
-    return "Your responses suggest that hair care has gradually become secondary to obtaining a hairstyle. This pattern appears throughout today's industry and is one of the core conditions Hairdemic is working to address.";
-  }
-  if(finding === "Trust Breakdown"){
-    return "Your responses suggest that repeated experiences have affected your confidence in booking communicating with or trusting hair professionals. This is one of the clearest signs of how the current system impacts clients.";
-  }
-  return "Your responses suggest that inconsistent pricing policies services and expectations have made the hair experience harder to navigate. Hairdemic identifies this as Standardization Breakdown.";
-}
-
-function metric(name,score,description){
-  return `
-    <div class="metric">
-      <span>${name}</span>
-      <strong>${score}</strong>
-      <p class="small">${description}</p>
-      <div class="bar"><span style="width:${score}%"></span></div>
-    </div>
-  `;
-}
-
-function showResults(){
-  const hairCare=avg(scores.hairCare);
-  const trust=avg(scores.trust);
-  const consistency=avg(scores.consistency);
-  const overall=Math.round((hairCare+trust+consistency)/3);
-  const impact=exposure(overall);
-  const finding=primaryFinding(hairCare,trust,consistency);
-
-  document.getElementById("app").innerHTML=`
-    <div class="badge">Hairdemic Results</div>
-
-    <h1>Hairdemic Impact Index™</h1>
-    <div class="index">${overall}</div>
-    <h2>${impact}</h2>
-
-    <div class="box">
-      <h3>Your experience isn't an isolated incident.</h3>
-      <p>Your Hairdemic Impact Index suggests your experience reflects patterns that have become increasingly common across today's hair industry.</p>
-      <p>This isn't about blaming clients or stylists. It's about recognizing a system that has become increasingly disconnected from hair care.</p>
-      <p><strong>This is why Hairdemic exists.</strong></p>
-    </div>
-
-    <h2>Your Index Breakdown</h2>
-
-    <div class="resultsGrid">
-      ${metric("Hair Care Impact Index",hairCare,"How much the industry's structure has affected your ability to consistently receive hair care as part of your hair experience.")}
-      ${metric("Trust Impact Index",trust,"How much your confidence and sense of safety have been affected when choosing hair professionals.")}
-      ${metric("Consistency Impact Index",consistency,"How predictable or unpredictable your hair experiences have been across pricing policies services and expectations.")}
-    </div>
-
-    <div class="box">
-      <h2>Primary Finding</h2>
-      <h3>${finding}</h3>
-      <p>${findingText(finding)}</p>
-    </div>
-
-    <div class="box">
-      <h2>What Happens Next?</h2>
-      <p>The Hairdemic Screening™ is only the beginning.</p>
-      <p>Every completed screening strengthens our understanding of today's hair industry and helps shape future research education standards and solutions.</p>
-      <p><strong>The cure is in our hands.</strong></p>
-    </div>
-
-    <div class="box">
-      <h2>Join the Movement</h2>
-      <p>☑ Add your anonymous experience to Hairdemic Research</p>
-      <p>☑ Become an Early Hairdemic Member</p>
-      <p>☑ Receive the Full Hairdemic Case Report when released</p>
-      <p>☑ Help restore hair care as the foundation of the modern hair industry</p>
-    </div>
-
-    <button class="main" onclick="alert('Next step: connect this button to your paid Hairdemic Case Report checkout or member signup.')">Join Hairdemic</button>
-    <button onclick="location.reload()">Retake Screening</button>
-  `;
+function shareResult(){
+const text=`My Hairdemic Impact Index™ is ${lastResult.total}. ${lastResult.exp}. Primary Finding: ${lastResult.f}. The cure is in our hands.`;
+if(navigator.share){navigator.share({title:"My Hairdemic Results",text:text,url:location.href}).catch(()=>{})}
+else{navigator.clipboard.writeText(text).then(()=>alert("Your share text was copied."))}
 }
 home();
 </script>
