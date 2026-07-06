@@ -32,6 +32,30 @@
     .index{font-size:90px;line-height:1;font-weight:900;letter-spacing:-.06em;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;margin:10px 0}
     .box{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:18px;margin:18px 0}
     .small{font-size:14px;color:var(--muted)}
+    .analysisWrap{margin-top:18px}
+    .analysisItem{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      margin:10px 0;
+      color:var(--muted);
+      font-size:18px;
+    }
+    .analysisItem strong{color:white}
+    .pulse{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      margin:20px auto;
+      background:linear-gradient(90deg,var(--pink),var(--cyan));
+      animation:pulse 1.3s infinite;
+    }
+    @keyframes pulse{
+      0%{transform:scale(.95);opacity:.7}
+      50%{transform:scale(1.08);opacity:1}
+      100%{transform:scale(.95);opacity:.7}
+    }
     @media(max-width:700px){.app{padding:22px}.resultsGrid{grid-template-columns:1fr}.index{font-size:70px}h1{font-size:42px}}
   </style>
 </head>
@@ -72,7 +96,7 @@ let scores={hairCare:[],trust:[],consistency:[]};
 
 function home(){
 document.getElementById("app").innerHTML=`
-<div class="badge">HAIRDEMIC</div>
+<div class="badge">Official Hairdemic Assessment™</div>
 <h1><span class="highlight">The cure is in our hands.</span></h1>
 <p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p>
 <p>Most people learned to accept it.</p>
@@ -84,7 +108,7 @@ document.getElementById("app").innerHTML=`
 <p><strong>Add your voice.</strong></p>
 <p><strong>Be part of the change.</strong></p>
 </div>
-<button class="main" onclick="start()">Begin the Hairdemic Screening™</button>
+<button class="main" onclick="start()">Take the First Step</button>
 <p class="small">Your experience matters. Your voice helps shape what comes next.</p>`;
 }
 
@@ -140,7 +164,24 @@ if(item.type==="hairCareReverse"||item.type==="hairCare"){scores.hairCare.push(v
 else if(item.type==="trust"){scores.trust.push(value);}
 else if(item.type==="consistency"){scores.consistency.push(value);}
 });
-showResults();
+showAnalyzing();
+}
+
+function showAnalyzing(){
+document.getElementById("app").innerHTML=`
+<div class="badge">Analyzing Results</div>
+<h1>Preparing your Hairdemic Impact Index™</h1>
+<p>Your responses are being reviewed across the three core areas of the Hairdemic Screening™.</p>
+<div class="pulse"></div>
+<div class="analysisWrap">
+  <div class="analysisItem">✓ <strong>Hair Care Impact</strong> analyzed</div>
+  <div class="analysisItem">✓ <strong>Trust Impact</strong> analyzed</div>
+  <div class="analysisItem">✓ <strong>Consistency Impact</strong> analyzed</div>
+  <div class="analysisItem">✓ <strong>Primary Finding</strong> identified</div>
+</div>
+<p><strong>The cure is in our hands.</strong></p>
+`;
+setTimeout(showResults,2200);
 }
 
 function avg(arr){
