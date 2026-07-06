@@ -50,6 +50,14 @@ button:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,231,255,.08)}
 .shareCard h2{color:#fff;margin-bottom:4px}
 .shareCard .shareScore{font-size:82px;font-weight:900;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;line-height:.95}
 hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:18px 0}
+.recordCard{border:1px solid rgba(245,200,75,.45);border-radius:26px;background:linear-gradient(160deg,rgba(245,200,75,.12),rgba(255,47,179,.08),rgba(34,231,255,.08));padding:24px;text-align:center;margin:22px 0;box-shadow:0 0 40px rgba(245,200,75,.08)}
+.recordCode{font-size:clamp(28px,6vw,54px);font-weight:900;letter-spacing:.06em;color:#fff;margin:10px 0}
+.recordGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;text-align:left;margin-top:18px}
+.recordItem{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:14px}
+.recordItem span{display:block;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.recordItem strong{color:#fff;font-size:17px}
+.roleSeal{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:999px;border:1px solid rgba(34,231,255,.42);color:var(--cyan);font-weight:900}
+@media(max-width:760px){.recordGrid{grid-template-columns:1fr}}
 @keyframes pulse{0%{transform:scale(.95);opacity:.7}50%{transform:scale(1.08);opacity:1}100%{transform:scale(.95);opacity:.7}}
 @keyframes heartbeat{0%{transform:scale(1)}14%{transform:scale(1.08)}28%{transform:scale(1)}42%{transform:scale(1.13)}70%{transform:scale(1)}100%{transform:scale(1)}}
 @keyframes emergencyGlow{0%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}50%{filter:drop-shadow(0 0 26px rgba(255,49,90,.85))}100%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}}
@@ -98,40 +106,7 @@ function back(){current--;showQ()}
 function answer(i){answers[current]=i;current++;current<Q.length?showQ():calc()}
 function score(q,i){let v=i*25;if(q[2]=="hairCareReverse")return 100-v;if(q[2]=="hairCare")return[80,20,35,65][i];return v}
 function calc(){scores={hairCare:[],trust:[],consistency:[]};Q.forEach((q,i)=>{if(q[2]=="none")return;let v=score(q,answers[i]);if(q[2].includes("hairCare"))scores.hairCare.push(v);else scores[q[2]].push(v)});analyze()}
-function analyze(){
-wrap(`<div class="center">
-<div class="badge">Emergency Analysis</div>
-<h1>Scanning your Hairdemic exposure...</h1>
-<p>Your responses are being reviewed across hair care trust and consistency.</p>
-<div class="pulse"></div>
-<div id="analysisSteps"></div>
-<p><strong>The cure is in our hands.</strong></p>
-</div>`);
-
-const steps=[
-"Hair Care Analysis complete",
-"Trust Analysis complete",
-"Consistency Analysis complete",
-"Comparing responses against Hairdemic patterns",
-"Calculating Hairdemic Impact Index™",
-"Generating official assessment"
-];
-
-const box=document.getElementById("analysisSteps");
-let i=0;
-
-function addStep(){
-  if(i<steps.length){
-    box.innerHTML += `<div class="analysisItem">✓ <strong>${steps[i]}</strong></div>`;
-    i++;
-    setTimeout(addStep,850);
-  } else {
-    setTimeout(results,900);
-  }
-}
-
-addStep();
-}
+function analyze(){wrap(`<div class="center"><div class="badge">Emergency Analysis</div><h1>Scanning your Hairdemic exposure...</h1><p>Your responses are being reviewed across hair care trust and consistency.</p><div class="pulse"></div><div class="analysisItem">✓ <strong>Hair Care Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Trust Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Consistency Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Primary Finding</strong> identified</div><p><strong>The cure is in our hands.</strong></p></div>`);setTimeout(results,1800)}
 function avg(a){return Math.round(a.reduce((x,y)=>x+y,0)/a.length||0)}
 function exposure(s){return s<=20?"Minimal Hairdemic Exposure":s<=40?"Mild Hairdemic Exposure":s<=60?"Moderate Hairdemic Exposure":s<=80?"Significant Hairdemic Exposure":"Severe Hairdemic Exposure"}
 function personality(s){if(s<=20)return"Your experience shows limited signs of Hairdemic exposure. You may have avoided many of the patterns affecting today's industry.";if(s<=40)return"Your experience shows signs of the Hairdemic but you have avoided some of the deeper patterns affecting today's industry.";if(s<=60)return"Your experience reflects several common Hairdemic patterns that can make the hair industry difficult to navigate.";if(s<=80)return"Your results suggest you've experienced many of the conditions that define today's Hairdemic.";return"Your experience reflects widespread breakdowns in consistency trust and hair care that Hairdemic was created to address."}
@@ -139,14 +114,70 @@ function primary(h,t,c){return h>=t&&h>=c?"Hair Care Displacement":t>=h&&t>=c?"T
 function text(f){if(f=="Hair Care Displacement")return"Your responses suggest that hair care has gradually become secondary to obtaining a hairstyle. This pattern appears throughout today's industry and is one of the core conditions Hairdemic is working to address.";if(f=="Trust Breakdown")return"Your responses suggest that repeated experiences have affected your confidence in booking communicating with or trusting hair professionals.";return"Your responses suggest that inconsistent pricing policies services and expectations have made the hair experience harder to navigate."}
 function countUp(el,end){let n=0,step=Math.max(1,Math.ceil(end/45));let timer=setInterval(()=>{n+=step;if(n>=end){n=end;clearInterval(timer)}el.textContent=n},24)}
 function meter(n,s,d){return`<div class="meter"><div><h3>${n}</h3><p class="small">${d}</p><div class="track"><div class="fill" data-width="${s}%"></div></div></div><strong class="miniScore" data-score="${s}">0</strong></div>`}
-function results(){let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);lastResult={h,t,c,total,f,exp:exposure(total)};
+function recordCode(){
+let existing=localStorage.getItem("hairdemicRecordCode");
+if(existing)return existing;
+const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+let code="HD-";
+for(let i=0;i<6;i++){code+=chars[Math.floor(Math.random()*chars.length)]}
+localStorage.setItem("hairdemicRecordCode",code);
+return code;
+}
+function roleForFinding(f){
+if(f=="Hair Care Displacement")return"Hair Care Advocate";
+if(f=="Trust Breakdown")return"Trust Rebuilder";
+return"Industry Navigator";
+}
+function roleText(role){
+if(role=="Hair Care Advocate")return"Your record highlights the need to restore hair care as the foundation of the modern hair industry.";
+if(role=="Trust Rebuilder")return"Your record highlights the need to rebuild confidence between clients and hair professionals.";
+return"Your record highlights the need for clearer standards expectations and systems across the modern hair industry.";
+}
+function results(){
+let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);
+let role=roleForFinding(f),code=recordCode();
+lastResult={h,t,c,total,f,exp:exposure(total),role,code};
 wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment™</div><div class="resultTag">Your Hairdemic Exposure Reading</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div><p class="statement">${personality(total)}</p></div>
+
+<div class="recordCard">
+<div class="badge">Official Hairdemic Record™</div>
+<h2>Your voice has been officially recorded.</h2>
+<p>You are now part of the first documented effort to restore hair care as the foundation of the modern hair industry.</p>
+<div class="recordGrid">
+<div class="recordItem"><span>Record Status</span><strong>✓ Officially Recorded</strong></div>
+<div class="recordItem"><span>Movement Status</span><strong>Founding Voice</strong></div>
+<div class="recordItem"><span>Hairdemic Record Code</span><strong>${code}</strong></div>
+<div class="recordItem"><span>Official Role</span><strong>${role}</strong></div>
+<div class="recordItem"><span>Primary Finding</span><strong>${f}</strong></div>
+<div class="recordItem"><span>Generation Seal</span><strong>★ Generation One</strong></div>
+</div>
+<div class="roleSeal">${role}</div>
+<p class="small">${roleText(role)}</p>
+<p class="gold"><strong>The cure is in our hands.</strong></p>
+</div>
+
 <div class="resultIntro"><div class="box"><h2>You're not imagining it.</h2><p>If you've ever felt like finding a hairstylist shouldn't be this difficult...</p><p>If you've ever wondered why every appointment feels different...</p><p>If you've ever questioned whether hair care still comes first...</p><p><strong>You're not alone.</strong></p><p>Hairdemic is documenting these patterns for the first time.</p></div></div>
+
 <div class="breakdown"><div class="panel"><div class="badge">Assessment Breakdown</div>${meter("Hair Care Impact",h,"How much the industry's structure has affected your ability to consistently receive hair care as part of your experience.")}${meter("Trust Impact",t,"How much your confidence and sense of safety have been affected when choosing hair professionals.")}${meter("Consistency Impact",c,"How predictable or unpredictable your hair experiences have been across pricing policies services and expectations.")}<p class="small">Scores range from 0 lowest impact to 100 highest impact.</p></div><div class="panel"><div class="badge">Primary Finding</div><h2>${f}</h2><p>${text(f)}</p></div></div>
-<div class="shareCard" id="shareCard"><h2>HAIRDEMIC™</h2><p>Hairdemic Impact Index™</p><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
-<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>You are one of the first people helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Share My Results</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
+
+<div class="shareCard" id="shareCard"><h2>OFFICIAL HAIRDEMIC RECORD™</h2><p>Generation One</p><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Hairdemic Record Code: ${code}</p><p>Role: ${role}</p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
+
+<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>Your Hairdemic Record™ is the beginning of your long-term Hairdemic journey.</p><p>One day this record can connect to your Hairdemic profile hair timeline appointment history hair growth progress stylist history and future care goals.</p><p>You are one of the first voices helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Share My Official Record</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
 countUp(document.getElementById("mainScore"),total);document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120)}
-function shareResult(){const text=`My Hairdemic Impact Index™ is ${lastResult.total}. ${lastResult.exp}. Primary Finding: ${lastResult.f}. The cure is in our hands.`;if(navigator.share){navigator.share({title:"My Hairdemic Results",text:text,url:location.href}).catch(()=>{})}else{navigator.clipboard.writeText(text).then(()=>alert("Your share text was copied."))}}
+function shareResult(){
+const text=`I just completed my Official Hairdemic Record™.
+
+Generation One
+Hairdemic Record Code: ${lastResult.code}
+Hairdemic Impact Index™: ${lastResult.total}
+Exposure Level: ${lastResult.exp}
+Official Role: ${lastResult.role}
+Primary Finding: ${lastResult.f}
+
+Hairdemic is documenting what people have been experiencing in today's hair industry.
+
+The cure is in our hands.`;
+if(navigator.share){navigator.share({title:"My Official Hairdemic Record™",text:text,url:location.href}).catch(()=>{})}else{navigator.clipboard.writeText(text).then(()=>alert("Your Official Hairdemic Record share text was copied."))}}
 home();
 </script>
 </body>
