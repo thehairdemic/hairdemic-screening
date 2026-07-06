@@ -170,37 +170,90 @@ function metric(name,score){
 return `<div class="metric"><span>${name}</span><strong>${score}</strong><div class="bar"><span style="width:${score}%"></span></div></div>`;
 }
 
-function showResults(){
-const hairCare=avg(scores.hairCare);
-const trust=avg(scores.trust);
-const consistency=avg(scores.consistency);
-const overall=Math.round((hairCare+trust+consistency)/3);
-const impact=level(overall);
-const finding=primaryFinding(hairCare,trust,consistency);
-document.getElementById("app").innerHTML=`
-<div class="badge">Your Results</div>
-<h1>Your Hairdemic Index™</h1>
-<div class="index">${overall}</div>
-<h2>${impact}</h2>
-<p>Your results suggest your hair experience has been affected by the Hairdemic through patterns connected to care trust and consistency. This does not mean you are the problem. It means your experience may reflect larger issues in today’s hair industry.</p>
-<div class="resultsGrid">
-${metric("Hair Care Impact Index",hairCare)}
-${metric("Trust Impact Index",trust)}
-${metric("Consistency Impact Index",consistency)}
-</div>
-<div class="box">
-<h3>Primary Finding: ${finding}</h3>
-<p>Your strongest result points to ${finding}. Your full Hairdemic Case Report will explain what this means why it happens and how to navigate your next hair experience with more confidence.</p>
-</div>
-<div class="box">
-<p><strong>You added your voice.</strong></p>
-<p>Every completed screening helps document today's hair experience and strengthens the movement to restore hair care as the foundation of the modern hair industry.</p>
-<p><strong>The cure is in our hands.</strong></p>
-</div>
-<button class="main" onclick="alert('Next step: connect this button to your paid Hairdemic Case Report checkout.')">Unlock Full Hairdemic Case Report</button>
-<button onclick="location.reload()">Retake Screening</button>`;
+function exposure(score){
+  if(score <= 20) return "Minimal Hairdemic Exposure";
+  if(score <= 40) return "Mild Hairdemic Exposure";
+  if(score <= 60) return "Moderate Hairdemic Exposure";
+  if(score <= 80) return "Significant Hairdemic Exposure";
+  return "Severe Hairdemic Exposure";
 }
 
+function findingText(finding){
+  if(finding === "Hair Care Displacement"){
+    return "Your responses suggest that hair care has gradually become secondary to obtaining a hairstyle. This pattern appears throughout today's industry and is one of the core conditions Hairdemic is working to address.";
+  }
+  if(finding === "Trust Breakdown"){
+    return "Your responses suggest that repeated experiences have affected your confidence in booking communicating with or trusting hair professionals. This is one of the clearest signs of how the current system impacts clients.";
+  }
+  return "Your responses suggest that inconsistent pricing policies services and expectations have made the hair experience harder to navigate. Hairdemic identifies this as Standardization Breakdown.";
+}
+
+function metric(name,score,description){
+  return `
+    <div class="metric">
+      <span>${name}</span>
+      <strong>${score}</strong>
+      <p class="small">${description}</p>
+      <div class="bar"><span style="width:${score}%"></span></div>
+    </div>
+  `;
+}
+
+function showResults(){
+  const hairCare=avg(scores.hairCare);
+  const trust=avg(scores.trust);
+  const consistency=avg(scores.consistency);
+  const overall=Math.round((hairCare+trust+consistency)/3);
+  const impact=exposure(overall);
+  const finding=primaryFinding(hairCare,trust,consistency);
+
+  document.getElementById("app").innerHTML=`
+    <div class="badge">Hairdemic Results</div>
+
+    <h1>Hairdemic Impact Index™</h1>
+    <div class="index">${overall}</div>
+    <h2>${impact}</h2>
+
+    <div class="box">
+      <h3>Your experience isn't an isolated incident.</h3>
+      <p>Your Hairdemic Impact Index suggests your experience reflects patterns that have become increasingly common across today's hair industry.</p>
+      <p>This isn't about blaming clients or stylists. It's about recognizing a system that has become increasingly disconnected from hair care.</p>
+      <p><strong>This is why Hairdemic exists.</strong></p>
+    </div>
+
+    <h2>Your Index Breakdown</h2>
+
+    <div class="resultsGrid">
+      ${metric("Hair Care Impact Index",hairCare,"How much the industry's structure has affected your ability to consistently receive hair care as part of your hair experience.")}
+      ${metric("Trust Impact Index",trust,"How much your confidence and sense of safety have been affected when choosing hair professionals.")}
+      ${metric("Consistency Impact Index",consistency,"How predictable or unpredictable your hair experiences have been across pricing policies services and expectations.")}
+    </div>
+
+    <div class="box">
+      <h2>Primary Finding</h2>
+      <h3>${finding}</h3>
+      <p>${findingText(finding)}</p>
+    </div>
+
+    <div class="box">
+      <h2>What Happens Next?</h2>
+      <p>The Hairdemic Screening™ is only the beginning.</p>
+      <p>Every completed screening strengthens our understanding of today's hair industry and helps shape future research education standards and solutions.</p>
+      <p><strong>The cure is in our hands.</strong></p>
+    </div>
+
+    <div class="box">
+      <h2>Join the Movement</h2>
+      <p>☑ Add your anonymous experience to Hairdemic Research</p>
+      <p>☑ Become an Early Hairdemic Member</p>
+      <p>☑ Receive the Full Hairdemic Case Report when released</p>
+      <p>☑ Help restore hair care as the foundation of the modern hair industry</p>
+    </div>
+
+    <button class="main" onclick="alert('Next step: connect this button to your paid Hairdemic Case Report checkout or member signup.')">Join Hairdemic</button>
+    <button onclick="location.reload()">Retake Screening</button>
+  `;
+}
 home();
 </script>
 </body>
