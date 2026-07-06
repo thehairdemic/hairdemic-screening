@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Hairdemic Screening™</title>
 <style>
-:root{--bg:#07080d;--card:#101522;--card2:#171d2c;--text:#fff;--muted:#b8bfd1;--pink:#ff2fb3;--cyan:#22e7ff;--gold:#f5c84b;--line:#2b3347}
+:root{--bg:#07080d;--card:#101522;--card2:#171d2c;--text:#fff;--muted:#b8bfd1;--pink:#ff2fb3;--cyan:#22e7ff;--gold:#f5c84b;--red:#ff315a;--line:#2b3347}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:radial-gradient(circle at top left,rgba(255,47,179,.22),transparent 30%),radial-gradient(circle at bottom right,rgba(34,231,255,.16),transparent 35%),var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:18px}
-.app{max-width:960px;margin:auto;background:linear-gradient(180deg,var(--card),#090b12);border:1px solid rgba(255,255,255,.08);border-radius:30px;padding:28px;box-shadow:0 28px 90px rgba(0,0,0,.5);animation:fadeIn .45s ease}
+.app{max-width:980px;margin:auto;background:linear-gradient(180deg,var(--card),#090b12);border:1px solid rgba(255,255,255,.08);border-radius:30px;padding:28px;box-shadow:0 28px 90px rgba(0,0,0,.55);animation:fadeIn .45s ease}
 .screen{animation:slideUp .35s ease}
 .badge{display:inline-block;border:1px solid rgba(34,231,255,.42);color:var(--cyan);padding:8px 13px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;box-shadow:0 0 18px rgba(34,231,255,.12)}
 h1{font-size:clamp(42px,7vw,82px);line-height:.92;margin:10px 0 18px}
@@ -27,8 +27,12 @@ button:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,231,255,.08)}
 .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:.25s}
 .row{display:flex;gap:12px;flex-wrap:wrap}.row button{flex:1;min-width:160px}
 .center{text-align:center}
-.index{font-size:clamp(110px,18vw,190px);line-height:.85;font-weight:900;letter-spacing:-.08em;background:linear-gradient(90deg,var(--pink),#8a4dff,var(--cyan));-webkit-background-clip:text;color:transparent;margin:20px 0;text-shadow:0 0 40px rgba(255,47,179,.18)}
-.exposure{font-size:clamp(28px,5vw,48px);font-weight:900;color:#fff;margin:0 0 24px}
+.resultHero{position:relative;text-align:center;padding:18px 8px 28px}
+.resultHero:before{content:"";position:absolute;inset:12px 8%;border-radius:50%;background:radial-gradient(circle,rgba(255,49,90,.2),rgba(255,47,179,.08),transparent 65%);filter:blur(8px);z-index:0}
+.resultHero>*{position:relative;z-index:1}
+.index{font-size:clamp(150px,24vw,260px);line-height:.78;font-weight:900;letter-spacing:-.08em;background:linear-gradient(90deg,var(--red),var(--pink),#8a4dff,var(--cyan));-webkit-background-clip:text;color:transparent;margin:26px 0 12px;text-shadow:0 0 50px rgba(255,49,90,.28);animation:heartbeat 1.15s ease-in-out 4,emergencyGlow 1.15s ease-in-out 4}
+.exposure{font-size:clamp(28px,5vw,52px);font-weight:900;color:#fff;margin:0 0 18px}
+.resultTag{font-size:16px;color:var(--gold);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 .resultIntro{max-width:760px;margin:0 auto 26px;text-align:left}
 .breakdown{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin:20px 0}
 .panel{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:24px;padding:22px}
@@ -39,16 +43,19 @@ button:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,231,255,.08)}
 .small{font-size:14px;color:var(--muted)}
 .gold{color:var(--gold)}
 .join{border-color:rgba(245,200,75,.38);background:linear-gradient(180deg,rgba(245,200,75,.08),rgba(255,255,255,.035))}
-.pulse{width:76px;height:76px;border-radius:50%;margin:22px auto;background:linear-gradient(90deg,var(--pink),var(--cyan));animation:pulse 1.3s infinite}
+.pulse{width:76px;height:76px;border-radius:50%;margin:22px auto;background:linear-gradient(90deg,var(--red),var(--pink),var(--cyan));animation:pulse 1.3s infinite}
 .analysisItem{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0;color:var(--muted);font-size:18px}
 .analysisItem strong{color:white}
 .shareCard{border:1px solid rgba(34,231,255,.35);border-radius:24px;background:linear-gradient(160deg,rgba(255,47,179,.12),rgba(34,231,255,.09));padding:22px;text-align:center;margin:18px 0;box-shadow:0 0 35px rgba(34,231,255,.08)}
 .shareCard h2{color:#fff;margin-bottom:4px}
-.shareCard .shareScore{font-size:78px;font-weight:900;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;line-height:.95}
+.shareCard .shareScore{font-size:82px;font-weight:900;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;line-height:.95}
+hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:18px 0}
 @keyframes pulse{0%{transform:scale(.95);opacity:.7}50%{transform:scale(1.08);opacity:1}100%{transform:scale(.95);opacity:.7}}
+@keyframes heartbeat{0%{transform:scale(1)}14%{transform:scale(1.08)}28%{transform:scale(1)}42%{transform:scale(1.13)}70%{transform:scale(1)}100%{transform:scale(1)}}
+@keyframes emergencyGlow{0%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}50%{filter:drop-shadow(0 0 26px rgba(255,49,90,.85))}100%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:760px){.app{padding:22px}.breakdown{grid-template-columns:1fr}.meter{grid-template-columns:1fr}.meter strong{text-align:left}.index{font-size:100px}}
+@media(max-width:760px){.app{padding:22px}.breakdown{grid-template-columns:1fr}.meter{grid-template-columns:1fr}.meter strong{text-align:left}.index{font-size:125px}}
 </style>
 </head>
 <body>
@@ -83,62 +90,30 @@ const Q=[
 ];
 let current=-1,answers=[],scores={hairCare:[],trust:[],consistency:[]},lastResult=null;
 const app=document.getElementById("app");
-
 function wrap(x){app.innerHTML=`<div class="screen">${x}</div>`}
-function home(){
-wrap(`<section class="hero">
-<div class="badge">Official Hairdemic Assessment™</div>
-<h1><span class="glow">The cure is in our hands.</span></h1>
-<p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p>
-<p>Most people learned to accept it.</p>
-<div class="statement">We didn't.</div>
-<p>Hairdemic is a movement committed to restoring hair care as the foundation of the modern hair industry through research education community and action.</p>
-<p>The Hairdemic Screening™ is the first step.</p>
-<div class="box"><p><strong>Measure your experience.</strong></p><p><strong>Add your voice.</strong></p><p><strong>Be part of the change.</strong></p></div>
-<button class="main" onclick="start()">Take the First Step</button>
-<p class="small">Begin the Hairdemic Screening™</p>
-</section>`);
-}
-function start(){current=0;answers=[];scores={hairCare:[],trust:[],consistency:[]};showQ();}
-function showQ(){
-const q=Q[current],pct=Math.round((current/Q.length)*100);
-wrap(`<div class="progressMeta"><span>${q[3]}</span><span>Question ${current+1} of ${Q.length}</span></div>
-<div class="progress"><span style="width:${pct}%"></span></div>
-<div class="badge">${q[3]}</div>
-<h2>${q[0]}</h2>
-${q[1].map((o,i)=>`<button onclick="answer(${i})">${o}</button>`).join("")}
-<div class="row">${current>0?`<button onclick="back()">Back</button>`:""}</div>`);
-}
-function back(){current--;showQ();}
-function answer(i){answers[current]=i;current++;current<Q.length?showQ():calc();}
+function home(){wrap(`<section class="hero"><div class="badge">Official Hairdemic Assessment™</div><h1><span class="glow">The cure is in our hands.</span></h1><p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p><p>Most people learned to accept it.</p><div class="statement">We didn't.</div><p>Hairdemic is a movement committed to restoring hair care as the foundation of the modern hair industry through research education community and action.</p><p>The Hairdemic Screening™ is the first step.</p><div class="box"><p><strong>Measure your experience.</strong></p><p><strong>Add your voice.</strong></p><p><strong>Be part of the change.</strong></p></div><button class="main" onclick="start()">Take the First Step</button><p class="small">Begin the Hairdemic Screening™</p></section>`)}
+function start(){current=0;answers=[];scores={hairCare:[],trust:[],consistency:[]};showQ()}
+function showQ(){const q=Q[current],pct=Math.round((current/Q.length)*100);wrap(`<div class="progressMeta"><span>${q[3]}</span><span>Question ${current+1} of ${Q.length}</span></div><div class="progress"><span style="width:${pct}%"></span></div><div class="badge">${q[3]}</div><h2>${q[0]}</h2>${q[1].map((o,i)=>`<button onclick="answer(${i})">${o}</button>`).join("")}<div class="row">${current>0?`<button onclick="back()">Back</button>`:""}</div>`)}
+function back(){current--;showQ()}
+function answer(i){answers[current]=i;current++;current<Q.length?showQ():calc()}
 function score(q,i){let v=i*25;if(q[2]=="hairCareReverse")return 100-v;if(q[2]=="hairCare")return[80,20,35,65][i];return v}
 function calc(){scores={hairCare:[],trust:[],consistency:[]};Q.forEach((q,i)=>{if(q[2]=="none")return;let v=score(q,answers[i]);if(q[2].includes("hairCare"))scores.hairCare.push(v);else scores[q[2]].push(v)});analyze()}
-function analyze(){
-wrap(`<div class="center"><div class="badge">Analyzing Results</div><h1>Preparing your Hairdemic Impact Index™</h1><p>Your responses are being reviewed across the three core areas of the Hairdemic Screening™.</p><div class="pulse"></div><div class="analysisItem">✓ <strong>Hair Care Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Trust Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Consistency Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Primary Finding</strong> identified</div><p><strong>The cure is in our hands.</strong></p></div>`);
-setTimeout(results,1800);
-}
+function analyze(){wrap(`<div class="center"><div class="badge">Emergency Analysis</div><h1>Scanning your Hairdemic exposure...</h1><p>Your responses are being reviewed across hair care trust and consistency.</p><div class="pulse"></div><div class="analysisItem">✓ <strong>Hair Care Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Trust Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Consistency Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Primary Finding</strong> identified</div><p><strong>The cure is in our hands.</strong></p></div>`);setTimeout(results,1800)}
 function avg(a){return Math.round(a.reduce((x,y)=>x+y,0)/a.length||0)}
 function exposure(s){return s<=20?"Minimal Hairdemic Exposure":s<=40?"Mild Hairdemic Exposure":s<=60?"Moderate Hairdemic Exposure":s<=80?"Significant Hairdemic Exposure":"Severe Hairdemic Exposure"}
+function personality(s){if(s<=20)return"Your experience shows limited signs of Hairdemic exposure. You may have avoided many of the patterns affecting today's industry.";if(s<=40)return"Your experience shows signs of the Hairdemic but you have avoided some of the deeper patterns affecting today's industry.";if(s<=60)return"Your experience reflects several common Hairdemic patterns that can make the hair industry difficult to navigate.";if(s<=80)return"Your results suggest you've experienced many of the conditions that define today's Hairdemic.";return"Your experience reflects widespread breakdowns in consistency trust and hair care that Hairdemic was created to address."}
 function primary(h,t,c){return h>=t&&h>=c?"Hair Care Displacement":t>=h&&t>=c?"Trust Breakdown":"Standardization Breakdown"}
 function text(f){if(f=="Hair Care Displacement")return"Your responses suggest that hair care has gradually become secondary to obtaining a hairstyle. This pattern appears throughout today's industry and is one of the core conditions Hairdemic is working to address.";if(f=="Trust Breakdown")return"Your responses suggest that repeated experiences have affected your confidence in booking communicating with or trusting hair professionals.";return"Your responses suggest that inconsistent pricing policies services and expectations have made the hair experience harder to navigate."}
-function countUp(el,end){let n=0,step=Math.max(1,Math.ceil(end/40));let timer=setInterval(()=>{n+=step;if(n>=end){n=end;clearInterval(timer)}el.textContent=n},24)}
+function countUp(el,end){let n=0,step=Math.max(1,Math.ceil(end/45));let timer=setInterval(()=>{n+=step;if(n>=end){n=end;clearInterval(timer)}el.textContent=n},24)}
 function meter(n,s,d){return`<div class="meter"><div><h3>${n}</h3><p class="small">${d}</p><div class="track"><div class="fill" data-width="${s}%"></div></div></div><strong class="miniScore" data-score="${s}">0</strong></div>`}
-function results(){
-let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);lastResult={h,t,c,total,f,exp:exposure(total)};
-wrap(`<div class="center"><div class="badge">Hairdemic Screening Results™</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div></div>
-<div class="resultIntro"><div class="box"><h3>Your experience isn't an isolated incident.</h3><p>Your Hairdemic Impact Index suggests your experience reflects patterns that have become increasingly common across today's hair industry.</p><p>This isn't about blaming clients or stylists. It's about recognizing a system that has become increasingly disconnected from hair care.</p><p><strong>This is why Hairdemic exists.</strong></p></div></div>
+function results(){let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);lastResult={h,t,c,total,f,exp:exposure(total)};
+wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment™</div><div class="resultTag">Your Hairdemic Exposure Reading</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div><p class="statement">${personality(total)}</p></div>
+<div class="resultIntro"><div class="box"><h2>You're not imagining it.</h2><p>If you've ever felt like finding a hairstylist shouldn't be this difficult...</p><p>If you've ever wondered why every appointment feels different...</p><p>If you've ever questioned whether hair care still comes first...</p><p><strong>You're not alone.</strong></p><p>Hairdemic is documenting these patterns for the first time.</p></div></div>
 <div class="breakdown"><div class="panel"><div class="badge">Assessment Breakdown</div>${meter("Hair Care Impact",h,"How much the industry's structure has affected your ability to consistently receive hair care as part of your experience.")}${meter("Trust Impact",t,"How much your confidence and sense of safety have been affected when choosing hair professionals.")}${meter("Consistency Impact",c,"How predictable or unpredictable your hair experiences have been across pricing policies services and expectations.")}<p class="small">Scores range from 0 lowest impact to 100 highest impact.</p></div><div class="panel"><div class="badge">Primary Finding</div><h2>${f}</h2><p>${text(f)}</p></div></div>
-<div class="shareCard" id="shareCard"><h2>My Hairdemic Impact Index™</h2><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
-<div class="box join"><h2>What Happens Next?</h2><p>You are now part of the first generation of Hairdemic.</p><p>Every completed screening helps document the state of today's hair industry.</p><p>Every story helps shape future research.</p><p>Every voice brings us closer to restoring hair care as the foundation of the industry.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Share My Results</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
-countUp(document.getElementById("mainScore"),total);
-document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));
-setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120);
-}
-function shareResult(){
-const text=`My Hairdemic Impact Index™ is ${lastResult.total}. ${lastResult.exp}. Primary Finding: ${lastResult.f}. The cure is in our hands.`;
-if(navigator.share){navigator.share({title:"My Hairdemic Results",text:text,url:location.href}).catch(()=>{})}
-else{navigator.clipboard.writeText(text).then(()=>alert("Your share text was copied."))}
-}
+<div class="shareCard" id="shareCard"><h2>HAIRDEMIC™</h2><p>Hairdemic Impact Index™</p><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
+<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>You are one of the first people helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Share My Results</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
+countUp(document.getElementById("mainScore"),total);document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120)}
+function shareResult(){const text=`My Hairdemic Impact Index™ is ${lastResult.total}. ${lastResult.exp}. Primary Finding: ${lastResult.f}. The cure is in our hands.`;if(navigator.share){navigator.share({title:"My Hairdemic Results",text:text,url:location.href}).catch(()=>{})}else{navigator.clipboard.writeText(text).then(()=>alert("Your share text was copied."))}}
 home();
 </script>
 </body>
