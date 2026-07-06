@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hairdemic Screening™</title>
+  <style>
+    body{margin:0;background:#08090d;color:white;font-family:Arial,sans-serif;padding:20px}
+    .box{max-width:800px;margin:auto;background:#111522;border:1px solid #333;padding:30px;border-radius:25px}
+    h1{font-size:44px;color:#ff2fb3}
+    h2{color:#20f0ff}
+    button{display:block;width:100%;margin:10px 0;padding:15px;border-radius:14px;border:1px solid #333;background:#191f2e;color:white;font-size:16px}
+    button:hover{border-color:#20f0ff}
+    .main{background:linear-gradient(90deg,#ff2fb3,#20f0ff);color:#06070a;font-weight:bold}
+    .score{font-size:70px;font-weight:bold;color:#ff2fb3}
+  </style>
+</head>
+<body>
+<div class="box" id="app"></div>
+
+<script>
+const questions=[
+["How often do you have your hair professionally done?",["Weekly","Every 2 weeks","Monthly","Every few months","Rarely"],"none"],
+["Do you currently have one hairstylist you consistently book with?",["Yes","No"],"none"],
+["Approximately how many different hairstylists have you used in the past 5 years?",["1","2–3","4–6","7+"],"none"],
+["What type of services do you get most often?",["Silk Press","Braids","Sew-in / Extensions","Wigs","Color","Natural Hair","Locs","Other"],"none"],
+["How often do you leave hair appointments feeling disappointed?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust"],
+["How often do you feel nervous before trying a new hairstylist?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust"],
+["How often do you feel like you have to hope for the best when booking?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust"],
+["How often do you feel like every hairstylist has different expectations, policies, or rules?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency"],
+["How often do you feel confused about what an appointment will include?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency"],
+["How often have you switched hairstylists because of a negative experience?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust"],
+["How often do you feel like getting your hair done is emotionally exhausting?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust"],
+["Overall, how satisfied are you with today’s hair industry?",["Very satisfied","Somewhat satisfied","Neutral","Somewhat dissatisfied","Very dissatisfied"],"trust"],
+["How often does your appointment include a shampoo before styling?",["Never","Rarely","Sometimes","Often","Almost Always"],"haircareReverse"],
+["How often does your stylist discuss the health of your hair before recommending a style?",["Never","Rarely","Sometimes","Often","Almost Always"],"haircareReverse"],
+["How often does your stylist explain why they recommend products, treatments, or services?",["Never","Rarely","Sometimes","Often","Almost Always"],"haircareReverse"],
+["How often do you leave knowing how to maintain your hair until your next visit?",["Never","Rarely","Sometimes","Often","Almost Always"],"haircareReverse"],
+["How often do you feel your hair health is prioritized as much as the final style?",["Never","Rarely","Sometimes","Often","Almost Always"],"haircareReverse"],
+["Who is primarily responsible for maintaining the health of your hair?",["Mostly me","Shared equally","Mostly my hairstylist","I’m not sure"],"haircare"],
+["How often have you been surprised by the final cost?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency"],
+["How often do you feel every stylist has different booking, cancellation, or deposit policies?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency"],
+["How often do you feel unsure whether you're booking the correct service?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency"],
+["How often do you have to research a stylist extensively before booking?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust"],
+["How often have you avoided booking because the process felt overwhelming?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust"],
+["How often does finding a good stylist feel like luck?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency"],
+["Does the modern hair industry provide a consistent client experience?",["Strongly Agree","Agree","Neutral","Disagree","Strongly Disagree"],"consistency"]
+];
+
+let i=-1, scores={trust:[], consistency:[], haircare:[]};
+
+function start(){i=0; showQ();}
+function showHome(){
+document.getElementById("app").innerHTML=`
+<h1>Hairdemic Screening™</h1>
+<h2>Have You Been Affected by the Hairdemic?</h2>
+<p>Discover how today's hair industry has shaped your hair experience.</p>
+<button class="main" onclick="start()">Begin Screening</button>`;
+}
+function showQ(){
+let q=questions[i];
+document.getElementById("app").innerHTML=`
+<p>Question ${i+1} of ${questions.length}</p>
+<h2>${q[0]}</h2>
+${q[1].map((o,idx)=>`<button onclick="answer(${idx})">${o}</button>`).join("")}`;
+}
+function answer(idx){
+let type=questions[i][2];
+if(type!="none"){
+let val=idx*25;
+if(type=="haircareReverse") scores.haircare.push(100-val);
+else if(type=="haircare") scores.haircare.push(idx==1?20:idx==2?35:idx==3?65:80);
+else scores[type].push(val);
+}
+i++;
+if(i<questions.length) showQ(); else results();
+}
+function avg(a){return Math.round(a.reduce((x,y)=>x+y,0)/a.length||0)}
+function level(s){
+if(s<=20)return"Minimal Impact";
+if(s<=40)return"Mild Impact";
+if(s<=60)return"Moderate Impact";
+if(s<=80)return"Significant Impact";
+return"Severe Impact";
+}
+function results(){
+let h=avg(scores.haircare), t=avg(scores.trust), c=avg(scores.consistency);
+let total=Math.round((h+t+c)/3);
+document.getElementById("app").innerHTML=`
+<h1>Your Hairdemic Index™</h1>
+<div class="score">${total}</div>
+<h2>${level(total)}</h2>
+<p>Your results suggest your hair experience has been affected by the Hairdemic through care, trust, and consistency patterns.</p>
+<h3>Hair Care Index: ${h}</h3>
+<h3>Trust Index: ${t}</h3>
+<h3>Consistency Index: ${c}</h3>
+<button class="main">Unlock Full Hairdemic Case Report</button>
+<button onclick="location.reload()">Retake Screening</button>`;
+}
+showHome();
+</script>
+</body>
+</html>
