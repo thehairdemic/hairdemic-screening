@@ -134,8 +134,6 @@ button:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(34,231,255,.1)}
 .analysisItem{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0;color:var(--muted);font-size:18px}
 .analysisItem strong{color:white}
 .recordCard{
-  position:relative;
-  overflow:hidden;
   border:1px solid rgba(245,200,75,.45);
   border-radius:28px;
   background:linear-gradient(160deg,rgba(245,200,75,.12),rgba(255,47,179,.08),rgba(34,231,255,.08));
@@ -150,91 +148,6 @@ button:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(34,231,255,.1)}
 .recordItem span{display:block;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
 .recordItem strong{color:#fff;font-size:17px}
 .seal{display:inline-block;margin:12px 0;padding:10px 14px;border-radius:999px;border:1px solid rgba(245,200,75,.45);color:var(--gold);font-weight:900}
-
-.recordCard:before{
-  content:"";
-  position:absolute;
-  inset:-80px;
-  background:
-    radial-gradient(circle at center,transparent 0 14%,rgba(255,255,255,.035) 14.5% 15%,transparent 15.5% 21%,rgba(255,255,255,.03) 21.5% 22%,transparent 22.5% 30%,rgba(255,255,255,.025) 30.5% 31%,transparent 31.5%),
-    repeating-radial-gradient(circle at center,rgba(255,255,255,.025) 0 1px,transparent 1px 13px);
-  opacity:.38;
-  transform:rotate(-18deg);
-  pointer-events:none;
-}
-.recordCard:after{
-  content:"OFFICIAL HAIRDEMIC RECORD";
-  position:absolute;
-  left:50%;
-  top:48%;
-  transform:translate(-50%,-50%) rotate(-12deg);
-  font-size:clamp(42px,8vw,92px);
-  font-weight:900;
-  letter-spacing:.08em;
-  color:rgba(255,255,255,.035);
-  white-space:nowrap;
-  pointer-events:none;
-}
-.recordCard > *{position:relative;z-index:1}
-.officialSeal{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  margin:10px auto 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:#05060a;
-  font-weight:900;
-  letter-spacing:.05em;
-  background:radial-gradient(circle,#fff3b0 0 22%,var(--gold) 42%,#b27810 76%);
-  border:6px double rgba(255,255,255,.55);
-  box-shadow:0 0 36px rgba(245,200,75,.26),inset 0 0 18px rgba(255,255,255,.28);
-}
-.recordWatermark{
-  font-size:13px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.58);
-  margin-top:8px;
-}
-.signatureLine{
-  margin-top:22px;
-  padding-top:18px;
-  border-top:1px solid rgba(255,255,255,.16);
-  color:var(--muted);
-}
-.signatureLine strong{color:#fff}
-.medicalStrip{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin:18px 0;
-}
-.medicalPill{
-  border:1px solid rgba(34,231,255,.22);
-  background:rgba(34,231,255,.045);
-  border-radius:16px;
-  padding:12px;
-  color:var(--muted);
-  font-size:13px;
-  text-transform:uppercase;
-  letter-spacing:.06em;
-}
-.medicalPill strong{
-  display:block;
-  margin-top:6px;
-  color:#fff;
-  font-size:16px;
-  text-transform:none;
-  letter-spacing:0;
-}
-.certificateFrame{
-  border:1px solid rgba(245,200,75,.45);
-  box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,0 0 44px rgba(245,200,75,.1);
-}
-
 .exposureMeter{margin:20px auto;padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--line);max-width:760px}
 .exposureMeterTop{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
 .exposureTrack{position:relative;height:16px;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--gold),#ff8a3d,var(--red));box-shadow:0 0 22px rgba(255,49,90,.18)}
@@ -466,26 +379,16 @@ wrap(`<div class="center">
 <p>Welcome ${firstName}.</p>
 <p>Your Official Hairdemic Record™ has been successfully registered.</p>
 <p>You are now a Founding Voice and a Generation One Member helping document the state of today's hair industry.</p>
-<div class="recordCard certificateFrame">
+<div class="recordCard">
 <div class="badge">Official Hairdemic Record™</div>
-<div class="officialSeal">★<br>GENERATION<br>ONE</div>
-<div class="recordWatermark">Verified Screening Record</div>
-<h2>Official Record ID</h2>
+<div class="seal">★ Generation One Member</div>
+<h2>Hairdemic Record ID</h2>
 <div class="recordCode">${lastResult.code}</div>
-<div class="medicalStrip">
-  <div class="medicalPill">Status<strong>Registered</strong></div>
-  <div class="medicalPill">Movement<strong>Founding Voice</strong></div>
-  <div class="medicalPill">Member Era<strong>Generation One</strong></div>
-</div>
 <div class="recordGrid">
-<div class="recordItem"><span>Hairdemic Impact Index™</span><strong>${lastResult.total} / 100</strong></div>
-<div class="recordItem"><span>Exposure Level</span><strong>${lastResult.exp}</strong></div>
+<div class="recordItem"><span>Status</span><strong>✓ Officially Registered</strong></div>
 <div class="recordItem"><span>Movement Status</span><strong>Founding Voice</strong></div>
+<div class="recordItem"><span>Impact Index</span><strong>${lastResult.total} / 100</strong></div>
 <div class="recordItem"><span>Primary Finding</span><strong>${lastResult.f}</strong></div>
-</div>
-<div class="signatureLine">
-<p><strong>Verified by Hairdemic™</strong></p>
-<p>Official Screening Platform</p>
 </div>
 <p class="gold"><strong>The cure is in our hands.</strong></p>
 </div>
@@ -499,182 +402,38 @@ const canvas=document.createElement("canvas");
 const w=1080,h=1920;
 canvas.width=w;canvas.height=h;
 const ctx=canvas.getContext("2d");
-
 const grad=ctx.createLinearGradient(0,0,w,h);
-grad.addColorStop(0,"#05060a");
-grad.addColorStop(.42,"#151022");
-grad.addColorStop(1,"#06141b");
-ctx.fillStyle=grad;
-ctx.fillRect(0,0,w,h);
-
-ctx.fillStyle="rgba(255,47,179,.18)";
-ctx.beginPath();
-ctx.arc(120,160,430,0,Math.PI*2);
-ctx.fill();
-
-ctx.fillStyle="rgba(34,231,255,.14)";
-ctx.beginPath();
-ctx.arc(980,1760,540,0,Math.PI*2);
-ctx.fill();
-
-cardBox(ctx,70,105,940,1710,58,"rgba(255,255,255,.055)","rgba(245,200,75,.45)");
-
-ctx.save();
-ctx.translate(540,955);
-ctx.rotate(-0.17);
-ctx.fillStyle="rgba(255,255,255,.035)";
-ctx.font="900 86px Arial";
+grad.addColorStop(0,"#07080d");grad.addColorStop(.45,"#151022");grad.addColorStop(1,"#06141b");
+ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+ctx.fillStyle="rgba(255,47,179,.16)";ctx.beginPath();ctx.arc(130,150,420,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="rgba(34,231,255,.13)";ctx.beginPath();ctx.arc(980,1760,520,0,Math.PI*2);ctx.fill();
+cardBox(ctx,80,120,920,1680,54,"rgba(255,255,255,.055)","rgba(255,255,255,.18)");
 ctx.textAlign="center";
-ctx.fillText("OFFICIAL",0,-80);
-ctx.fillText("HAIRDEMIC",0,10);
-ctx.fillText("RECORD",0,100);
-ctx.restore();
-
-drawSeal(ctx,540,255);
-
-ctx.textAlign="center";
-ctx.fillStyle="#22e7ff";
-ctx.font="700 32px Arial";
-ctx.fillText("OFFICIAL HAIRDEMIC RECORD™",540,415);
-
-ctx.fillStyle="#ffffff";
-ctx.font="900 60px Arial";
-wrapText(ctx,"Hairdemic Impact Index™",540,520,820,68);
-
-const scoreGrad=ctx.createLinearGradient(300,610,780,780);
-scoreGrad.addColorStop(0,"#ff315a");
-scoreGrad.addColorStop(.55,"#ff2fb3");
-scoreGrad.addColorStop(1,"#22e7ff");
-ctx.fillStyle=scoreGrad;
-ctx.font="900 230px Arial";
-ctx.fillText(String(lastResult.total),540,780);
-
-ctx.fillStyle="#ffffff";
-ctx.font="900 48px Arial";
-wrapText(ctx,lastResult.exp,540,875,820,58);
-
-drawExposureCanvas(ctx,lastResult.total,170,955,740);
-
-cardBox(ctx,150,1085,780,120,28,"rgba(255,255,255,.07)","rgba(34,231,255,.35)");
-ctx.fillStyle="#b8bfd1";
-ctx.font="700 27px Arial";
-ctx.fillText("OFFICIAL RECORD ID",540,1132);
-ctx.fillStyle="#ffffff";
-ctx.font="900 44px Arial";
-ctx.fillText(lastResult.code,540,1182);
-
-cardBox(ctx,150,1255,780,150,30,"rgba(255,255,255,.07)","rgba(255,47,179,.30)");
-ctx.fillStyle="#b8bfd1";
-ctx.font="700 27px Arial";
-ctx.fillText("MOVEMENT STATUS",540,1310);
-ctx.fillStyle="#ffffff";
-ctx.font="900 46px Arial";
-ctx.fillText("Founding Voice",540,1368);
-
-cardBox(ctx,150,1455,780,165,30,"rgba(255,255,255,.07)","rgba(245,200,75,.32)");
-ctx.fillStyle="#b8bfd1";
-ctx.font="700 27px Arial";
-ctx.fillText("PRIMARY FINDING",540,1510);
-ctx.fillStyle="#ffffff";
-ctx.font="900 42px Arial";
-wrapText(ctx,lastResult.f,540,1570,700,48);
-
-ctx.fillStyle="#f5c84b";
-ctx.font="900 40px Arial";
-wrapText(ctx,"The cure is in our hands.",540,1695,780,52);
-
-ctx.fillStyle="#22e7ff";
-ctx.font="800 30px Arial";
-ctx.fillText("thehairdemic.github.io/hairdemic-screening",540,1760);
-
+ctx.fillStyle="#22e7ff";ctx.font="700 34px Arial";ctx.fillText("OFFICIAL HAIRDEMIC RECORD™",540,215);
+ctx.fillStyle="#f5c84b";ctx.font="800 38px Arial";ctx.fillText("★ GENERATION ONE MEMBER",540,282);
+ctx.fillStyle="#ffffff";ctx.font="900 64px Arial";wrapText(ctx,"Hairdemic Impact Index™",540,390,820,72);
+const scoreGrad=ctx.createLinearGradient(300,500,780,700);
+scoreGrad.addColorStop(0,"#ff315a");scoreGrad.addColorStop(.55,"#ff2fb3");scoreGrad.addColorStop(1,"#22e7ff");
+ctx.fillStyle=scoreGrad;ctx.font="900 230px Arial";ctx.fillText(String(lastResult.total),540,670);
+ctx.fillStyle="#ffffff";ctx.font="900 54px Arial";wrapText(ctx,lastResult.exp,540,760,820,60);
+cardBox(ctx,150,870,780,120,28,"rgba(255,255,255,.07)","rgba(34,231,255,.35)");
+ctx.fillStyle="#b8bfd1";ctx.font="700 28px Arial";ctx.fillText("HAIRDEMIC RECORD ID",540,918);
+ctx.fillStyle="#ffffff";ctx.font="900 42px Arial";ctx.fillText(lastResult.code,540,968);
+cardBox(ctx,150,1045,780,170,30,"rgba(255,255,255,.07)","rgba(255,47,179,.30)");
+ctx.fillStyle="#b8bfd1";ctx.font="700 28px Arial";ctx.fillText("MOVEMENT STATUS",540,1100);
+ctx.fillStyle="#ffffff";ctx.font="900 46px Arial";ctx.fillText("Founding Voice",540,1160);
+cardBox(ctx,150,1270,780,190,30,"rgba(255,255,255,.07)","rgba(245,200,75,.32)");
+ctx.fillStyle="#b8bfd1";ctx.font="700 28px Arial";ctx.fillText("PRIMARY FINDING",540,1325);
+ctx.fillStyle="#ffffff";ctx.font="900 43px Arial";wrapText(ctx,lastResult.f,540,1390,700,50);
+ctx.fillStyle="#f5c84b";ctx.font="900 42px Arial";wrapText(ctx,"The cure is in our hands.",540,1570,780,54);
+ctx.fillStyle="#22e7ff";ctx.font="800 34px Arial";ctx.fillText("thehairdemic.github.io/hairdemic-screening",540,1715);
 canvas.toBlob(async(blob)=>{
-const file=new File([blob],"official-hairdemic-record.png",{type:"image/png"});
-if(navigator.canShare&&navigator.canShare({files:[file]})){
-  await navigator.share({title:"My Official Hairdemic Record™",text:"I just registered my Official Hairdemic Record™. The cure is in our hands.",files:[file]});
-}else{
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="official-hairdemic-record.png";
-  a.click();
-  alert("Your official record card downloaded. Share it to your story or post.");
-}
+const file=new File([blob],"hairdemic-record.png",{type:"image/png"});
+if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:"My Official Hairdemic Record™",text:"I just registered my Official Hairdemic Record™. The cure is in our hands.",files:[file]})}
+else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="hairdemic-record.png";a.click();alert("Your image card downloaded. Share it to your story or post.")}
 },"image/png");
 }
 
-function drawSeal(ctx,x,y){
-ctx.save();
-ctx.translate(x,y);
-const seal=ctx.createRadialGradient(0,0,10,0,0,98);
-seal.addColorStop(0,"#fff3b0");
-seal.addColorStop(.45,"#f5c84b");
-seal.addColorStop(1,"#9c6b12");
-ctx.fillStyle=seal;
-ctx.beginPath();
-ctx.arc(0,0,104,0,Math.PI*2);
-ctx.fill();
-ctx.strokeStyle="rgba(255,255,255,.72)";
-ctx.lineWidth=8;
-ctx.beginPath();
-ctx.arc(0,0,91,0,Math.PI*2);
-ctx.stroke();
-ctx.strokeStyle="rgba(5,6,10,.45)";
-ctx.lineWidth=3;
-ctx.beginPath();
-ctx.arc(0,0,72,0,Math.PI*2);
-ctx.stroke();
-ctx.fillStyle="#05060a";
-ctx.textAlign="center";
-ctx.font="900 42px Arial";
-ctx.fillText("★",0,-42);
-ctx.font="900 27px Arial";
-ctx.fillText("GENERATION",0,6);
-ctx.font="900 34px Arial";
-ctx.fillText("ONE",0,44);
-ctx.restore();
-}
-
-function drawExposureCanvas(ctx,score,x,y,w){
-const h=18;
-const grad=ctx.createLinearGradient(x,y,x+w,y);
-grad.addColorStop(0,"#35d07f");
-grad.addColorStop(.38,"#f5c84b");
-grad.addColorStop(.7,"#ff8a3d");
-grad.addColorStop(1,"#ff315a");
-ctx.fillStyle=grad;
-roundRectPath(ctx,x,y,w,h,9);
-ctx.fill();
-const dotX=x+(Math.max(0,Math.min(100,score))/100)*w;
-ctx.fillStyle="#ffffff";
-ctx.beginPath();
-ctx.arc(dotX,y+h/2,22,0,Math.PI*2);
-ctx.fill();
-ctx.lineWidth=7;
-ctx.strokeStyle="#05060a";
-ctx.stroke();
-ctx.fillStyle="#b8bfd1";
-ctx.font="700 22px Arial";
-ctx.textAlign="left";
-ctx.fillText("Mild",x,y+60);
-ctx.textAlign="center";
-ctx.fillText("Moderate",x+w*.38,y+60);
-ctx.fillText("High",x+w*.70,y+60);
-ctx.textAlign="right";
-ctx.fillText("Severe",x+w,y+60);
-}
-
-function roundRectPath(ctx,x,y,w,h,r){
-ctx.beginPath();
-ctx.moveTo(x+r,y);
-ctx.lineTo(x+w-r,y);
-ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-ctx.lineTo(x+w,y+h-r);
-ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-ctx.lineTo(x+r,y+h);
-ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-ctx.lineTo(x,y+r);
-ctx.quadraticCurveTo(x,y,x+r,y);
-ctx.closePath();
-}
 function shareTextOnly(){
 const text=`I took the Hairdemic Screening™. My Hairdemic Impact Index™ is ${lastResult.total}. ${lastResult.exp}. Primary Finding: ${lastResult.f}. The cure is in our hands.`;
 if(navigator.share){navigator.share({title:"My Hairdemic Results",text:text,url:location.href}).catch(()=>{})}
