@@ -162,22 +162,146 @@ wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment�
 
 <div class="shareCard" id="shareCard"><h2>OFFICIAL HAIRDEMIC RECORD™</h2><p>Generation One</p><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Hairdemic Record Code: ${code}</p><p>Role: ${role}</p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
 
-<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>Your Hairdemic Record™ is the beginning of your long-term Hairdemic journey.</p><p>One day this record can connect to your Hairdemic profile hair timeline appointment history hair growth progress stylist history and future care goals.</p><p>You are one of the first voices helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Share My Official Record</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
+<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>Your Hairdemic Record™ is the beginning of your long-term Hairdemic journey.</p><p>One day this record can connect to your Hairdemic profile hair timeline appointment history hair growth progress stylist history and future care goals.</p><p>You are one of the first voices helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Create My Share Card</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
 countUp(document.getElementById("mainScore"),total);document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120)}
 function shareResult(){
-const text=`I just completed my Official Hairdemic Record™.
+generateShareImage();
+}
 
-Generation One
-Hairdemic Record Code: ${lastResult.code}
-Hairdemic Impact Index™: ${lastResult.total}
-Exposure Level: ${lastResult.exp}
-Official Role: ${lastResult.role}
-Primary Finding: ${lastResult.f}
+function generateShareImage(){
+const canvas=document.createElement("canvas");
+const w=1080,h=1920;
+canvas.width=w;
+canvas.height=h;
+const ctx=canvas.getContext("2d");
 
-Hairdemic is documenting what people have been experiencing in today's hair industry.
+const grad=ctx.createLinearGradient(0,0,w,h);
+grad.addColorStop(0,"#07080d");
+grad.addColorStop(.45,"#151022");
+grad.addColorStop(1,"#06141b");
+ctx.fillStyle=grad;
+ctx.fillRect(0,0,w,h);
 
-The cure is in our hands.`;
-if(navigator.share){navigator.share({title:"My Official Hairdemic Record™",text:text,url:location.href}).catch(()=>{})}else{navigator.clipboard.writeText(text).then(()=>alert("Your Official Hairdemic Record share text was copied."))}}
+const glow1=ctx.createRadialGradient(120,160,0,120,160,520);
+glow1.addColorStop(0,"rgba(255,47,179,.45)");
+glow1.addColorStop(1,"rgba(255,47,179,0)");
+ctx.fillStyle=glow1;
+ctx.fillRect(0,0,w,h);
+
+const glow2=ctx.createRadialGradient(960,1780,0,960,1780,620);
+glow2.addColorStop(0,"rgba(34,231,255,.34)");
+glow2.addColorStop(1,"rgba(34,231,255,0)");
+ctx.fillStyle=glow2;
+ctx.fillRect(0,0,w,h);
+
+roundRect(ctx,80,120,920,1680,54,"rgba(255,255,255,.055)","rgba(255,255,255,.18)");
+
+ctx.textAlign="center";
+ctx.fillStyle="#22e7ff";
+ctx.font="700 34px Arial";
+ctx.fillText("OFFICIAL HAIRDEMIC RECORD™",540,215);
+
+ctx.fillStyle="#f5c84b";
+ctx.font="800 38px Arial";
+ctx.fillText("★ GENERATION ONE",540,282);
+
+ctx.fillStyle="#ffffff";
+ctx.font="900 64px Arial";
+wrapCanvasText(ctx,"Hairdemic Impact Index™",540,390,820,72);
+
+const scoreGrad=ctx.createLinearGradient(300,500,780,700);
+scoreGrad.addColorStop(0,"#ff315a");
+scoreGrad.addColorStop(.55,"#ff2fb3");
+scoreGrad.addColorStop(1,"#22e7ff");
+ctx.fillStyle=scoreGrad;
+ctx.font="900 230px Arial";
+ctx.fillText(String(lastResult.total),540,670);
+
+ctx.fillStyle="#ffffff";
+ctx.font="900 54px Arial";
+wrapCanvasText(ctx,lastResult.exp,540,760,820,60);
+
+roundRect(ctx,150,870,780,120,28,"rgba(255,255,255,.07)","rgba(34,231,255,.35)");
+ctx.fillStyle="#b8bfd1";
+ctx.font="700 28px Arial";
+ctx.fillText("HAIRDEMIC RECORD CODE",540,918);
+ctx.fillStyle="#ffffff";
+ctx.font="900 42px Arial";
+ctx.fillText(lastResult.code,540,968);
+
+roundRect(ctx,150,1045,780,170,30,"rgba(255,255,255,.07)","rgba(255,47,179,.30)");
+ctx.fillStyle="#b8bfd1";
+ctx.font="700 28px Arial";
+ctx.fillText("OFFICIAL ROLE",540,1100);
+ctx.fillStyle="#ffffff";
+ctx.font="900 46px Arial";
+wrapCanvasText(ctx,lastResult.role,540,1160,700,52);
+
+roundRect(ctx,150,1270,780,190,30,"rgba(255,255,255,.07)","rgba(245,200,75,.32)");
+ctx.fillStyle="#b8bfd1";
+ctx.font="700 28px Arial";
+ctx.fillText("PRIMARY FINDING",540,1325);
+ctx.fillStyle="#ffffff";
+ctx.font="900 43px Arial";
+wrapCanvasText(ctx,lastResult.f,540,1390,700,50);
+
+ctx.fillStyle="#f5c84b";
+ctx.font="900 42px Arial";
+wrapCanvasText(ctx,"The cure is in our hands.",540,1570,780,54);
+
+ctx.fillStyle="#b8bfd1";
+ctx.font="600 30px Arial";
+ctx.fillText("Take the screening",540,1670);
+ctx.fillStyle="#22e7ff";
+ctx.font="800 34px Arial";
+ctx.fillText("thehairdemic.github.io/hairdemic-screening",540,1720);
+
+canvas.toBlob(async(blob)=>{
+const file=new File([blob],"hairdemic-record.png",{type:"image/png"});
+if(navigator.canShare && navigator.canShare({files:[file]})){
+  await navigator.share({title:"My Official Hairdemic Record™",text:"I just completed my Official Hairdemic Record™. The cure is in our hands.",files:[file]});
+}else{
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="hairdemic-record.png";
+  a.click();
+  alert("Your image card downloaded. Share it to your story or post.");
+}
+},"image/png");
+}
+
+function roundRect(ctx,x,y,w,h,r,fill,stroke){
+ctx.beginPath();
+ctx.moveTo(x+r,y);
+ctx.lineTo(x+w-r,y);
+ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+ctx.lineTo(x+w,y+h-r);
+ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+ctx.lineTo(x+r,y+h);
+ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+ctx.lineTo(x,y+r);
+ctx.quadraticCurveTo(x,y,x+r,y);
+ctx.closePath();
+ctx.fillStyle=fill;
+ctx.fill();
+if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}
+}
+
+function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight){
+const words=String(text).split(" ");
+let line="";
+for(let n=0;n<words.length;n++){
+  const testLine=line+words[n]+" ";
+  if(ctx.measureText(testLine).width>maxWidth && n>0){
+    ctx.fillText(line,x,y);
+    line=words[n]+" ";
+    y+=lineHeight;
+  }else{
+    line=testLine;
+  }
+}
+ctx.fillText(line,x,y);
+}
 home();
 </script>
 </body>
