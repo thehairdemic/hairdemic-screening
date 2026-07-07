@@ -60,13 +60,6 @@ hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:18px 0}
 .recordItem strong{color:#fff;font-size:17px}
 .roleSeal{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:999px;border:1px solid rgba(34,231,255,.42);color:var(--cyan);font-weight:900}
 @media(max-width:760px){.recordGrid{grid-template-columns:1fr}}
-
-.exposureMeter{margin:20px 0;padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
-.exposureMeterTop{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-.exposureTrack{position:relative;height:16px;border-radius:999px;background:linear-gradient(90deg,#35d07f,#f5c84b,#ff8a3d,#ff315a);box-shadow:0 0 22px rgba(255,49,90,.18)}
-.exposureDot{position:absolute;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#fff;border:5px solid #07080d;box-shadow:0 0 24px rgba(255,255,255,.55)}
-.exposureMeterBottom{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:12px}
-
 @keyframes pulse{0%{transform:scale(.95);opacity:.7}50%{transform:scale(1.08);opacity:1}100%{transform:scale(.95);opacity:.7}}
 @keyframes heartbeat{0%{transform:scale(1)}14%{transform:scale(1.08)}28%{transform:scale(1)}42%{transform:scale(1.13)}70%{transform:scale(1)}100%{transform:scale(1)}}
 @keyframes emergencyGlow{0%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}50%{filter:drop-shadow(0 0 26px rgba(255,49,90,.85))}100%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}}
@@ -109,8 +102,8 @@ const Q=[
 let current=-1,answers=[],scores={hairCare:[],trust:[],consistency:[]},lastResult=null;
 const app=document.getElementById("app");
 
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
-const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+const SUPABASE_URL = "https://criyieeprdaiysvqprjy.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_zwhWF5z5neUwLOtghcIdDw_Y_TiiqtI";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 function wrap(x){app.innerHTML=`<div class="screen">${x}</div>`}
 function home(){wrap(`<section class="hero"><div class="badge">Official Hairdemic Assessment™</div><h1><span class="glow">The cure is in our hands.</span></h1><p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p><p>Most people learned to accept it.</p><div class="statement">We didn't.</div><p>Hairdemic is a movement committed to restoring hair care as the foundation of the modern hair industry through research education community and action.</p><p>The Hairdemic Screening™ is the first step.</p><div class="box"><p><strong>Measure your experience.</strong></p><p><strong>Add your voice.</strong></p><p><strong>Be part of the change.</strong></p></div><button class="main" onclick="start()">Take the First Step</button><p class="small">Begin the Hairdemic Screening™</p></section>`)}
@@ -151,7 +144,7 @@ function results(){
 let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);
 let role=roleForFinding(f),code=recordCode();
 lastResult={h,t,c,total,f,exp:exposure(total),role,code};
-wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment™</div><div class="resultTag">Your Hairdemic Exposure Reading</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div>${exposureMeter(total)}<p class="statement">${personality(total)}</p></div>
+wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment™</div><div class="resultTag">Your Hairdemic Exposure Reading</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div><p class="statement">${personality(total)}</p></div>
 
 <div class="recordCard">
 <div class="badge">Official Hairdemic Record™</div>
@@ -178,25 +171,6 @@ wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment�
 
 <div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>Your Hairdemic Record™ is the beginning of your long-term Hairdemic journey.</p><p>One day this record can connect to your Hairdemic profile hair timeline appointment history hair growth progress stylist history and future care goals.</p><p>You are one of the first voices helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Create My Share Card</button><button class="main" onclick="showClaimForm()">Claim My Hairdemic Record™</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
 countUp(document.getElementById("mainScore"),total);document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120)}
-function exposureMeter(score){
-const safeScore=Math.max(0,Math.min(100,score));
-return `<div class="exposureMeter">
-  <div class="exposureMeterTop">
-    <span>Hairdemic Exposure™</span>
-    <span>${safeScore} / 100</span>
-  </div>
-  <div class="exposureTrack">
-    <div class="exposureDot" style="left:${safeScore}%"></div>
-  </div>
-  <div class="exposureMeterBottom">
-    <span>Mild</span>
-    <span>Moderate</span>
-    <span>High</span>
-    <span>Severe</span>
-  </div>
-</div>`;
-}
-
 function stableRecordCodeFromEmail(email){
 let hash=0;
 for(let i=0;i<email.length;i++){hash=((hash<<5)-hash)+email.charCodeAt(i);hash|=0}
@@ -212,7 +186,7 @@ wrap(`<div class="center">
 <div class="box">
 <input id="claimName" class="claimInput" type="text" placeholder="First name optional">
 <input id="claimEmail" class="claimInput" type="email" placeholder="Email address">
-<button class="main" onclick="saveHairdemicRecord()">Register My Record</button>
+<button class="main" onclick="saveHairdemicRecord()">Save My Record</button>
 <button onclick="results()">Back to Results</button>
 <p class="notice">Your email saves your record so future Hairdemic tools can connect back to your original screening.</p>
 </div>
@@ -246,22 +220,20 @@ const {error}=await supabaseClient
 
 if(error){
 console.log(error);
-alert("Something went wrong saving your record. Check Supabase policies and column names.");
+alert("Supabase error: " + error.message);
 return;
 }
 
 wrap(`<div class="center">
-<div class="badge">Record Registered</div>
-<h1>Official Hairdemic Record™ Registered</h1>
+<div class="badge">Record Claimed</div>
+<h1>Your Hairdemic Record™ is saved.</h1>
 <p>${firstName?`Welcome ${firstName}.`:"Welcome."} You are a Founding Voice.</p>
-<p><strong>Generation One Member</strong></p>
 <div class="recordCard">
 <div class="badge">Official Hairdemic Record™</div>
 <h2>Hairdemic Record Code</h2>
 <div class="recordCode">${permanentCode}</div>
 <div class="roleSeal">${lastResult.role}</div>
-${exposureMeter(lastResult.total)}
-<p><strong>Exposure Level:</strong> ${lastResult.exp}</p>
+<p>${lastResult.exp}</p>
 <p class="gold"><strong>The cure is in our hands.</strong></p>
 </div>
 <button class="main" onclick="shareResult()">Create My Share Card</button>
@@ -364,7 +336,7 @@ ctx.fillText("thehairdemic.github.io/hairdemic-screening",540,1720);
 canvas.toBlob(async(blob)=>{
 const file=new File([blob],"hairdemic-record.png",{type:"image/png"});
 if(navigator.canShare && navigator.canShare({files:[file]})){
-  await navigator.share({title:"My Official Hairdemic Record™",text:"I just registered my Official Hairdemic Record™. The cure is in our hands.",files:[file]});
+  await navigator.share({title:"My Official Hairdemic Record™",text:"I just completed my Official Hairdemic Record™. The cure is in our hands.",files:[file]});
 }else{
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
