@@ -220,7 +220,7 @@ const {error}=await supabaseClient
 
 if(error){
 console.log(error);
-alert("Something went wrong saving your record. Check Supabase policies and column names.");
+alert("Supabase error: " + error.message);
 return;
 }
 
