@@ -65,7 +65,6 @@ hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:18px 0}
 @keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:760px){.app{padding:22px}.breakdown{grid-template-columns:1fr}.meter{grid-template-columns:1fr}.meter strong{text-align:left}.index{font-size:125px}}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <main class="app" id="app"></main>
@@ -99,9 +98,6 @@ const Q=[
 ];
 let current=-1,answers=[],scores={hairCare:[],trust:[],consistency:[]},lastResult=null;
 const app=document.getElementById("app");
-const SUPABASE_URL = "criyieeprdaiysvqprjy";
-const SUPABASE_ANON_KEY = "sb_publishable_zwhWF5z5neUwLOtghcIdDw_Y_TiiqtI";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 function wrap(x){app.innerHTML=`<div class="screen">${x}</div>`}
 function home(){wrap(`<section class="hero"><div class="badge">Official Hairdemic Assessment™</div><h1><span class="glow">The cure is in our hands.</span></h1><p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p><p>Most people learned to accept it.</p><div class="statement">We didn't.</div><p>Hairdemic is a movement committed to restoring hair care as the foundation of the modern hair industry through research education community and action.</p><p>The Hairdemic Screening™ is the first step.</p><div class="box"><p><strong>Measure your experience.</strong></p><p><strong>Add your voice.</strong></p><p><strong>Be part of the change.</strong></p></div><button class="main" onclick="start()">Take the First Step</button><p class="small">Begin the Hairdemic Screening™</p></section>`)}
 function start(){current=0;answers=[];scores={hairCare:[],trust:[],consistency:[]};showQ()}
@@ -166,58 +162,8 @@ wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment�
 
 <div class="shareCard" id="shareCard"><h2>OFFICIAL HAIRDEMIC RECORD™</h2><p>Generation One</p><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Hairdemic Record Code: ${code}</p><p>Role: ${role}</p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
 
-<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>Your Hairdemic Record™ is the beginning of your long-term Hairdemic journey.</p><p>One day this record can connect to your Hairdemic profile hair timeline appointment history hair growth progress stylist history and future care goals.</p><p>You are one of the first voices helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Create My Share Card</button><button class="main" onclick="showClaimForm()">Claim My Hairdemic Record™</button>Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
+<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p>Your Hairdemic Record™ is the beginning of your long-term Hairdemic journey.</p><p>One day this record can connect to your Hairdemic profile hair timeline appointment history hair growth progress stylist history and future care goals.</p><p>You are one of the first voices helping document the state of today's hair industry.</p><p>Every completed screening strengthens the evidence.</p><p>Every voice helps define the problem.</p><p>Every result helps shape the future.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Create My Share Card</button><button class="main" onclick="alert('Next step: connect this button to checkout or member signup.')">Join the Movement</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
 countUp(document.getElementById("mainScore"),total);document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120)}
-function showClaimForm(){
-  wrap(`<div class="center">
-    <div class="badge">Claim Your Record</div>
-    <h1>Claim My Hairdemic Record™</h1>
-    <p>Enter your email to save your Official Hairdemic Record™ and receive future Hairdemic updates.</p>
-    <div class="box">
-      <input id="claimEmail" type="email" placeholder="Email address" style="width:100%;padding:16px;border-radius:14px;border:1px solid #2b3347;background:#171d2c;color:white;font-size:16px;margin-bottom:12px">
-      <button class="main" onclick="saveHairdemicRecord()">Save My Record</button>
-      <button onclick="results()">Back to Results</button>
-    </div>
-  </div>`);
-}
-
-async function saveHairdemicRecord(){
-  const email=document.getElementById("claimEmail").value.trim().toLowerCase();
-  if(!email){alert("Please enter your email.");return;}
-
-  const record={
-    email:email,
-    record_code:lastResult.code,
-    impact_index:lastResult.total,
-    exposure:lastResult.exp,
-    primary_finding:lastResult.f,
-    official_role:lastResult.role
-  };
-
-  const {error}=await supabaseClient
-    .from("hairdemic_records")
-    .upsert(record,{onConflict:"email"});
-
-  if(error){
-    alert("Something went wrong saving your record.");
-    console.log(error);
-    return;
-  }
-
-  wrap(`<div class="center">
-    <div class="badge">Record Claimed</div>
-    <h1>Your Hairdemic Record™ is saved.</h1>
-    <p>Welcome, Founding Voice.</p>
-    <div class="recordCard">
-      <div class="badge">Official Hairdemic Record™</div>
-      <h2>${lastResult.code}</h2>
-      <p><strong>${lastResult.role}</strong></p>
-      <p>${lastResult.exp}</p>
-      <p class="gold"><strong>The cure is in our hands.</strong></p>
-    </div>
-    <button class="main" onclick="shareResult()">Create My Share Card</button>
-  </div>`);
-}
 function shareResult(){
 generateShareImage();
 }
