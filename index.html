@@ -1,41 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Hairdemic Screening™</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#07080d;--card:#101522;--card2:#171d2c;--text:#fff;--muted:#b8bfd1;--pink:#ff2fb3;--cyan:#22e7ff;--gold:#f5c84b;--red:#ff315a;--line:#2b3347}
+:root{
+  --bg:#06070d;
+  --panel:#101522;
+  --panel2:#171d2d;
+  --text:#ffffff;
+  --muted:#b8bfd1;
+  --pink:#ff2fb3;
+  --cyan:#22e7ff;
+  --gold:#f5c84b;
+  --red:#ff315a;
+  --green:#35d07f;
+  --line:#2b3347;
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at top left,rgba(255,47,179,.22),transparent 30%),radial-gradient(circle at bottom right,rgba(34,231,255,.16),transparent 35%),var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:18px}
-.app{max-width:980px;margin:auto;background:linear-gradient(180deg,var(--card),#090b12);border:1px solid rgba(255,255,255,.08);border-radius:30px;padding:28px;box-shadow:0 28px 90px rgba(0,0,0,.55);animation:fadeIn .45s ease}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,rgba(255,47,179,.26),transparent 30%),
+    radial-gradient(circle at bottom right,rgba(34,231,255,.18),transparent 36%),
+    linear-gradient(180deg,#06070d,#090b12);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  padding:18px;
+}
+.app{
+  max-width:980px;
+  margin:auto;
+  background:linear-gradient(180deg,rgba(16,21,34,.97),rgba(9,11,18,.98));
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:32px;
+  padding:30px;
+  box-shadow:0 30px 100px rgba(0,0,0,.58);
+}
 .screen{animation:slideUp .35s ease}
-.badge{display:inline-block;border:1px solid rgba(34,231,255,.42);color:var(--cyan);padding:8px 13px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;box-shadow:0 0 18px rgba(34,231,255,.12)}
-h1{font-size:clamp(42px,7vw,82px);line-height:.92;margin:10px 0 18px}
+.badge{
+  display:inline-block;
+  border:1px solid rgba(34,231,255,.42);
+  color:var(--cyan);
+  padding:8px 13px;
+  border-radius:999px;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+  box-shadow:0 0 18px rgba(34,231,255,.12);
+}
+h1{font-size:clamp(42px,7vw,84px);line-height:.92;margin:10px 0 18px}
 h2{font-size:clamp(26px,4vw,42px);line-height:1.06;margin:10px 0 18px}
 h3{font-size:22px;margin:18px 0 8px}
-p{color:var(--muted);font-size:18px;line-height:1.55}
+p{color:var(--muted);font-size:18px;line-height:1.58}
 .hero p{max-width:780px}
-.glow{background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;font-weight:900;text-shadow:0 0 38px rgba(255,47,179,.15)}
-.statement{font-size:26px;color:#fff;font-weight:900;margin:20px 0}
-.box{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:22px;padding:20px;margin:18px 0}
-button{width:100%;padding:16px;border-radius:17px;border:1px solid var(--line);background:var(--card2);color:#fff;font-size:16px;font-weight:800;cursor:pointer;margin:8px 0}
-button:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,231,255,.08)}
-.main{background:linear-gradient(90deg,var(--pink),var(--cyan));color:#05060a;border:0;box-shadow:0 0 24px rgba(255,47,179,.16)}
+.glow{
+  background:linear-gradient(90deg,var(--pink),var(--cyan));
+  -webkit-background-clip:text;
+  color:transparent;
+  font-weight:900;
+}
+.statement{font-size:27px;color:#fff;font-weight:900;margin:20px 0}
+.box,.panel{
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:22px;
+  margin:18px 0;
+}
+button{
+  width:100%;
+  padding:16px;
+  border-radius:17px;
+  border:1px solid var(--line);
+  background:var(--panel2);
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+  margin:8px 0;
+}
+button:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(34,231,255,.1)}
+.main{
+  background:linear-gradient(90deg,var(--pink),var(--cyan));
+  color:#05060a;
+  border:0;
+  box-shadow:0 0 24px rgba(255,47,179,.18);
+}
 .progressMeta{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
 .progress{height:10px;background:#22293a;border-radius:999px;overflow:hidden;margin-bottom:28px}
 .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:.25s}
-.row{display:flex;gap:12px;flex-wrap:wrap}.row button{flex:1;min-width:160px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row button{flex:1;min-width:160px}
 .center{text-align:center}
 .resultHero{position:relative;text-align:center;padding:18px 8px 28px}
-.resultHero:before{content:"";position:absolute;inset:12px 8%;border-radius:50%;background:radial-gradient(circle,rgba(255,49,90,.2),rgba(255,47,179,.08),transparent 65%);filter:blur(8px);z-index:0}
+.resultHero:before{
+  content:"";
+  position:absolute;
+  inset:12px 8%;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,49,90,.2),rgba(255,47,179,.08),transparent 65%);
+  filter:blur(8px);
+  z-index:0;
+}
 .resultHero>*{position:relative;z-index:1}
-.index{font-size:clamp(150px,24vw,260px);line-height:.78;font-weight:900;letter-spacing:-.08em;background:linear-gradient(90deg,var(--red),var(--pink),#8a4dff,var(--cyan));-webkit-background-clip:text;color:transparent;margin:26px 0 12px;text-shadow:0 0 50px rgba(255,49,90,.28);animation:heartbeat 1.15s ease-in-out 4,emergencyGlow 1.15s ease-in-out 4}
+.index{
+  font-size:clamp(145px,24vw,260px);
+  line-height:.78;
+  font-weight:900;
+  letter-spacing:-.08em;
+  background:linear-gradient(90deg,var(--red),var(--pink),#8a4dff,var(--cyan));
+  -webkit-background-clip:text;
+  color:transparent;
+  margin:26px 0 12px;
+  animation:heartbeat 1.15s ease-in-out 4,emergencyGlow 1.15s ease-in-out 4;
+}
 .exposure{font-size:clamp(28px,5vw,52px);font-weight:900;color:#fff;margin:0 0 18px}
 .resultTag{font-size:16px;color:var(--gold);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
-.resultIntro{max-width:760px;margin:0 auto 26px;text-align:left}
+.resultIntro{max-width:780px;margin:0 auto 26px;text-align:left}
 .breakdown{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin:20px 0}
-.panel{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:24px;padding:22px}
 .meter{display:grid;grid-template-columns:1fr 60px;gap:14px;align-items:center;margin:18px 0}
 .meter strong{font-size:28px;color:#fff;text-align:right}
 .track{height:12px;background:#252d3f;border-radius:999px;overflow:hidden;margin-top:8px}
@@ -46,32 +133,53 @@ button:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,231,255,.08)}
 .pulse{width:76px;height:76px;border-radius:50%;margin:22px auto;background:linear-gradient(90deg,var(--red),var(--pink),var(--cyan));animation:pulse 1.3s infinite}
 .analysisItem{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0;color:var(--muted);font-size:18px}
 .analysisItem strong{color:white}
-.shareCard{border:1px solid rgba(34,231,255,.35);border-radius:24px;background:linear-gradient(160deg,rgba(255,47,179,.12),rgba(34,231,255,.09));padding:22px;text-align:center;margin:18px 0;box-shadow:0 0 35px rgba(34,231,255,.08)}
-.shareCard h2{color:#fff;margin-bottom:4px}
-.shareCard .shareScore{font-size:82px;font-weight:900;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;color:transparent;line-height:.95}
-hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:18px 0}
-.claimInput{width:100%;padding:16px;border-radius:15px;border:1px solid var(--line);background:var(--card2);color:white;font-size:16px;margin:8px 0}
-.notice{font-size:14px;color:var(--muted);margin-top:10px}
-.recordCard{border:1px solid rgba(245,200,75,.45);border-radius:26px;background:linear-gradient(160deg,rgba(245,200,75,.12),rgba(255,47,179,.08),rgba(34,231,255,.08));padding:24px;text-align:center;margin:22px 0;box-shadow:0 0 40px rgba(245,200,75,.08)}
-.recordCode{font-size:clamp(28px,6vw,54px);font-weight:900;letter-spacing:.06em;color:#fff;margin:10px 0}
+.recordCard{
+  border:1px solid rgba(245,200,75,.45);
+  border-radius:28px;
+  background:linear-gradient(160deg,rgba(245,200,75,.12),rgba(255,47,179,.08),rgba(34,231,255,.08));
+  padding:24px;
+  text-align:center;
+  margin:22px 0;
+  box-shadow:0 0 40px rgba(245,200,75,.08);
+}
+.recordCode{font-size:clamp(34px,7vw,60px);font-weight:900;letter-spacing:.06em;color:#fff;margin:10px 0}
 .recordGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;text-align:left;margin-top:18px}
 .recordItem{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:14px}
 .recordItem span{display:block;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
 .recordItem strong{color:#fff;font-size:17px}
-.roleSeal{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:999px;border:1px solid rgba(34,231,255,.42);color:var(--cyan);font-weight:900}
-@media(max-width:760px){.recordGrid{grid-template-columns:1fr}}
+.seal{display:inline-block;margin:12px 0;padding:10px 14px;border-radius:999px;border:1px solid rgba(245,200,75,.45);color:var(--gold);font-weight:900}
+.exposureMeter{margin:20px auto;padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--line);max-width:760px}
+.exposureMeterTop{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.exposureTrack{position:relative;height:16px;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--gold),#ff8a3d,var(--red));box-shadow:0 0 22px rgba(255,49,90,.18)}
+.exposureDot{position:absolute;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#fff;border:5px solid #07080d;box-shadow:0 0 24px rgba(255,255,255,.55)}
+.exposureMeterBottom{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:12px}
+.claimInput{width:100%;padding:16px;border-radius:15px;border:1px solid var(--line);background:var(--panel2);color:white;font-size:16px;margin:8px 0}
+ul.missionList{margin:20px 0 24px 24px;line-height:1.9;color:#d7deeb}
+ul.missionList li{margin-bottom:8px}
+hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:18px 0}
 @keyframes pulse{0%{transform:scale(.95);opacity:.7}50%{transform:scale(1.08);opacity:1}100%{transform:scale(.95);opacity:.7}}
 @keyframes heartbeat{0%{transform:scale(1)}14%{transform:scale(1.08)}28%{transform:scale(1)}42%{transform:scale(1.13)}70%{transform:scale(1)}100%{transform:scale(1)}}
 @keyframes emergencyGlow{0%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}50%{filter:drop-shadow(0 0 26px rgba(255,49,90,.85))}100%{filter:drop-shadow(0 0 0 rgba(255,49,90,0))}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:760px){.app{padding:22px}.breakdown{grid-template-columns:1fr}.meter{grid-template-columns:1fr}.meter strong{text-align:left}.index{font-size:125px}}
+@media(max-width:760px){
+  .app{padding:22px}
+  .breakdown{grid-template-columns:1fr}
+  .recordGrid{grid-template-columns:1fr}
+  .meter{grid-template-columns:1fr}
+  .meter strong{text-align:left}
+  .index{font-size:125px}
+}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <main class="app" id="app"></main>
+
 <script>
+const SUPABASE_URL = "https://criyieeprdaiysvqprjy.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY = "sb_publishable_zwhWF5z5neUwLOtghcIdDw_Y_TiiqtI";
+const supabaseClient = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
 const Q=[
 ["How often do you have your hair professionally done?",["Weekly","Every 2 weeks","Monthly","Every few months","Rarely"],"none","Hair History"],
 ["Do you currently have one hairstylist you consistently book with?",["Yes","No"],"none","Hair History"],
@@ -84,7 +192,7 @@ const Q=[
 ["How often do you feel confused about what a hair appointment will include before you arrive?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Hair Experience"],
 ["How often have you switched hairstylists because of a negative experience?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Hair Experience"],
 ["How often do you feel like getting your hair done is emotionally exhausting?",["Never","Rarely","Sometimes","Often","Almost Always"],"trust","Hair Experience"],
-["Overall how satisfied are you with your experiences in today’s hair industry?",["Very satisfied","Somewhat satisfied","Neutral","Somewhat dissatisfied","Very dissatisfied"],"trust","Hair Experience"],
+["Overall how satisfied are you with your experiences in today's hair industry?",["Very satisfied","Somewhat satisfied","Neutral","Somewhat dissatisfied","Very dissatisfied"],"trust","Hair Experience"],
 ["How often does your hair appointment include a shampoo before styling?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
 ["How often does your stylist discuss the health of your hair before recommending a style?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
 ["How often does your stylist explain why they recommend certain products treatments or services?",["Never","Rarely","Sometimes","Often","Almost Always"],"hairCareReverse","Hair Care"],
@@ -99,96 +207,83 @@ const Q=[
 ["How often do you feel like finding a good hairstylist depends more on luck than a reliable system?",["Never","Rarely","Sometimes","Often","Almost Always"],"consistency","Industry Experience"],
 ["Overall do you believe the modern hair industry provides a consistent experience for clients?",["Strongly Agree","Agree","Neutral","Disagree","Strongly Disagree"],"consistency","Industry Experience"]
 ];
+
 let current=-1,answers=[],scores={hairCare:[],trust:[],consistency:[]},lastResult=null;
 const app=document.getElementById("app");
 
-const SUPABASE_URL = "https://criyieeprdaiysvqprjy.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_zwhWF5z5neUwLOtghcIdDw_Y_TiiqtI";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 function wrap(x){app.innerHTML=`<div class="screen">${x}</div>`}
-function home(){wrap(`<section class="hero"><div class="badge">Official Hairdemic Assessment™</div><h1><span class="glow">The cure is in our hands.</span></h1><p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p><p>Most people learned to accept it.</p><div class="statement">We didn't.</div><p>Hairdemic is a movement committed to restoring hair care as the foundation of the modern hair industry through research education community and action.</p><p>The Hairdemic Screening™ is the first step.</p><div class="box"><p><strong>Measure your experience.</strong></p><p><strong>Add your voice.</strong></p><p><strong>Be part of the change.</strong></p></div><button class="main" onclick="start()">Take the First Step</button><p class="small">Begin the Hairdemic Screening™</p></section>`)}
+
+function home(){
+wrap(`<section class="hero">
+<div class="badge">Official Hairdemic Assessment™</div>
+<h1><span class="glow">The cure is in our hands.</span></h1>
+<p>For years we've adapted to a hair industry that has become increasingly inconsistent confusing and disconnected from hair care.</p>
+<p>Most people learned to accept it.</p>
+<div class="statement">We didn't.</div>
+<p>Hairdemic is a movement committed to restoring hair care as the foundation of the modern hair industry through research education community and action.</p>
+<p>The Hairdemic Screening™ is the first step.</p>
+<div class="box"><p><strong>Measure your experience.</strong></p><p><strong>Add your voice.</strong></p><p><strong>Be part of the change.</strong></p></div>
+<button class="main" onclick="start()">Take the First Step</button>
+<p class="small">Begin the Hairdemic Screening™</p>
+</section>`);
+}
+
 function start(){current=0;answers=[];scores={hairCare:[],trust:[],consistency:[]};showQ()}
-function showQ(){const q=Q[current],pct=Math.round((current/Q.length)*100);wrap(`<div class="progressMeta"><span>${q[3]}</span><span>Question ${current+1} of ${Q.length}</span></div><div class="progress"><span style="width:${pct}%"></span></div><div class="badge">${q[3]}</div><h2>${q[0]}</h2>${q[1].map((o,i)=>`<button onclick="answer(${i})">${o}</button>`).join("")}<div class="row">${current>0?`<button onclick="back()">Back</button>`:""}</div>`)}
+
+function showQ(){
+const q=Q[current],pct=Math.round((current/Q.length)*100);
+wrap(`<div class="progressMeta"><span>${q[3]}</span><span>Question ${current+1} of ${Q.length}</span></div>
+<div class="progress"><span style="width:${pct}%"></span></div>
+<div class="badge">${q[3]}</div>
+<h2>${q[0]}</h2>
+${q[1].map((o,i)=>`<button onclick="answer(${i})">${o}</button>`).join("")}
+<div class="row">${current>0?`<button onclick="back()">Back</button>`:""}</div>`);
+}
+
 function back(){current--;showQ()}
 function answer(i){answers[current]=i;current++;current<Q.length?showQ():calc()}
-function score(q,i){let v=i*25;if(q[2]=="hairCareReverse")return 100-v;if(q[2]=="hairCare")return[80,20,35,65][i];return v}
-function calc(){scores={hairCare:[],trust:[],consistency:[]};Q.forEach((q,i)=>{if(q[2]=="none")return;let v=score(q,answers[i]);if(q[2].includes("hairCare"))scores.hairCare.push(v);else scores[q[2]].push(v)});analyze()}
-function analyze(){wrap(`<div class="center"><div class="badge">Emergency Analysis</div><h1>Scanning your Hairdemic exposure...</h1><p>Your responses are being reviewed across hair care trust and consistency.</p><div class="pulse"></div><div class="analysisItem">✓ <strong>Hair Care Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Trust Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Consistency Impact</strong> analyzed</div><div class="analysisItem">✓ <strong>Primary Finding</strong> identified</div><p><strong>The cure is in our hands.</strong></p></div>`);setTimeout(results,1800)}
+
+function score(q,i){
+let v=i*25;
+if(q[2]=="hairCareReverse")return 100-v;
+if(q[2]=="hairCare")return[80,20,35,65][i];
+return v;
+}
+
+function calc(){
+scores={hairCare:[],trust:[],consistency:[]};
+Q.forEach((q,i)=>{if(q[2]=="none")return;let v=score(q,answers[i]);if(q[2].includes("hairCare"))scores.hairCare.push(v);else scores[q[2]].push(v)});
+analyze()
+}
+
+function analyze(){
+wrap(`<div class="center">
+<div class="badge">Emergency Analysis</div>
+<h1>Scanning your Hairdemic exposure...</h1>
+<p>Your responses are being reviewed across hair care trust and consistency.</p>
+<div class="pulse"></div>
+<div id="analysisSteps"></div>
+<p><strong>The cure is in our hands.</strong></p>
+</div>`);
+const steps=["Hair Care Analysis complete","Trust Analysis complete","Consistency Analysis complete","Comparing responses against Hairdemic patterns","Calculating Hairdemic Impact Index™","Generating official assessment"];
+const box=document.getElementById("analysisSteps");
+let i=0;
+function addStep(){if(i<steps.length){box.innerHTML+=`<div class="analysisItem">✓ <strong>${steps[i]}</strong></div>`;i++;setTimeout(addStep,850)}else{setTimeout(results,900)}}
+addStep();
+}
+
 function avg(a){return Math.round(a.reduce((x,y)=>x+y,0)/a.length||0)}
 function exposure(s){return s<=20?"Minimal Hairdemic Exposure":s<=40?"Mild Hairdemic Exposure":s<=60?"Moderate Hairdemic Exposure":s<=80?"Significant Hairdemic Exposure":"Severe Hairdemic Exposure"}
-function personality(s){if(s<=20)return"Your experience shows limited signs of Hairdemic exposure. You may have avoided many of the patterns affecting today's industry.";if(s<=40)return"Your experience shows signs of the Hairdemic but you have avoided some of the deeper patterns affecting today's industry.";if(s<=60)return"Your experience reflects several common Hairdemic patterns that can make the hair industry difficult to navigate.";if(s<=80)return"Your results suggest you've experienced many of the conditions that define today's Hairdemic.";return"Your experience reflects widespread breakdowns in consistency trust and hair care that Hairdemic was created to address."}
+function personality(s){if(s<=20)return"Your experience shows limited signs of Hairdemic exposure.";if(s<=40)return"Your experience shows signs of the Hairdemic but you have avoided some of the deeper patterns affecting today's industry.";if(s<=60)return"Your experience reflects several common Hairdemic patterns that can make the hair industry difficult to navigate.";if(s<=80)return"Your results suggest you've experienced many of the conditions that define today's Hairdemic.";return"Your experience reflects widespread breakdowns in consistency trust and hair care that Hairdemic was created to address."}
 function primary(h,t,c){return h>=t&&h>=c?"Hair Care Displacement":t>=h&&t>=c?"Trust Breakdown":"Standardization Breakdown"}
-function text(f){if(f=="Hair Care Displacement")return"Your responses suggest that hair care has gradually become secondary to obtaining a hairstyle. This pattern appears throughout today's industry and is one of the core conditions Hairdemic is working to address.";if(f=="Trust Breakdown")return"Your responses suggest that repeated experiences have affected your confidence in booking communicating with or trusting hair professionals.";return"Your responses suggest that inconsistent pricing policies services and expectations have made the hair experience harder to navigate."}
+function findingText(f){if(f=="Hair Care Displacement")return"Your responses suggest that hair care has gradually become secondary to obtaining a hairstyle.";if(f=="Trust Breakdown")return"Your responses suggest that repeated experiences have affected your confidence in booking communicating with or trusting hair professionals.";return"Your responses suggest that inconsistent pricing policies services and expectations have made the hair experience harder to navigate."}
 function countUp(el,end){let n=0,step=Math.max(1,Math.ceil(end/45));let timer=setInterval(()=>{n+=step;if(n>=end){n=end;clearInterval(timer)}el.textContent=n},24)}
 function meter(n,s,d){return`<div class="meter"><div><h3>${n}</h3><p class="small">${d}</p><div class="track"><div class="fill" data-width="${s}%"></div></div></div><strong class="miniScore" data-score="${s}">0</strong></div>`}
-function recordCode(){
-let existing=localStorage.getItem("hairdemicRecordCode");
-if(existing)return existing;
-const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-let code="HD-";
-for(let i=0;i<6;i++){code+=chars[Math.floor(Math.random()*chars.length)]}
-localStorage.setItem("hairdemicRecordCode",code);
-return code;
+function exposureMeter(score){
+const safe=Math.max(0,Math.min(100,score));
+return `<div class="exposureMeter"><div class="exposureMeterTop"><span>Hairdemic Exposure™</span><span>${safe} / 100</span></div><div class="exposureTrack"><div class="exposureDot" style="left:${safe}%"></div></div><div class="exposureMeterBottom"><span>Mild</span><span>Moderate</span><span>High</span><span>Severe</span></div></div>`;
 }
-function roleForFinding(f){
-if(f=="Hair Care Displacement")return"Hair Care Advocate";
-if(f=="Trust Breakdown")return"Trust Rebuilder";
-return"Industry Navigator";
-}
-function roleText(role){
-if(role=="Hair Care Advocate")return"Your record highlights the need to restore hair care as the foundation of the modern hair industry.";
-if(role=="Trust Rebuilder")return"Your record highlights the need to rebuild confidence between clients and hair professionals.";
-return"Your record highlights the need for clearer standards expectations and systems across the modern hair industry.";
-}
-function results(){
-let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);
-let role=roleForFinding(f),code=recordCode();
-lastResult={h,t,c,total,f,exp:exposure(total),role,code};
-wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment™</div><div class="resultTag">Your Hairdemic Exposure Reading</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div>
 
-<div style="margin:20px auto;padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid #2b3347;max-width:760px">
-  <div style="display:flex;justify-content:space-between;font-size:13px;color:#b8bfd1;font-weight:bold;margin-bottom:10px">
-    <span>Hairdemic Exposure™</span>
-    <span>${total} / 100</span>
-  </div>
-
-  <div style="position:relative;height:16px;border-radius:999px;background:linear-gradient(90deg,#35d07f,#f5c84b,#ff8a3d,#ff315a);overflow:visible">
-    <div style="position:absolute;left:${total}%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:white;border:5px solid #07080d;box-shadow:0 0 24px rgba(255,255,255,.55)"></div>
-  </div>
-
-  <div style="display:flex;justify-content:space-between;color:#b8bfd1;font-size:12px;margin-top:12px">
-    <span>Mild</span>
-    <span>Moderate</span>
-    <span>High</span>
-    <span>Severe</span>
-  </div>
-</div><p class="statement">${personality(total)}</p></div>
-
-<div class="recordCard">
-<div class="badge">Official Hairdemic Record™</div>
-<h2>Your voice has been officially recorded.</h2>
-<p>You are now part of the first documented effort to restore hair care as the foundation of the modern hair industry.</p>
-<div class="recordGrid">
-<div class="recordItem"><span>Record Status</span><strong>✓ Officially Recorded</strong></div>
-<div class="recordItem"><span>Movement Status</span><strong>Founding Voice</strong></div>
-<div class="recordItem"><span>Hairdemic Record Code</span><strong>${code}</strong></div>
-<div class="recordItem"><span>Official Role</span><strong>${role}</strong></div>
-<div class="recordItem"><span>Primary Finding</span><strong>${f}</strong></div>
-<div class="recordItem"><span>Generation Seal</span><strong>★ Generation One</strong></div>
-</div>
-<div class="roleSeal">${role}</div>
-<p class="small">${roleText(role)}</p>
-<p class="gold"><strong>The cure is in our hands.</strong></p>
-</div>
-
-<div class="resultIntro"><div class="box"><h2>You're not imagining it.</h2><p>If you've ever felt like finding a hairstylist shouldn't be this difficult...</p><p>If you've ever wondered why every appointment feels different...</p><p>If you've ever questioned whether hair care still comes first...</p><p><strong>You're not alone.</strong></p><p>Hairdemic is documenting these patterns for the first time.</p></div></div>
-
-<div class="breakdown"><div class="panel"><div class="badge">Assessment Breakdown</div>${meter("Hair Care Impact",h,"How much the industry's structure has affected your ability to consistently receive hair care as part of your experience.")}${meter("Trust Impact",t,"How much your confidence and sense of safety have been affected when choosing hair professionals.")}${meter("Consistency Impact",c,"How predictable or unpredictable your hair experiences have been across pricing policies services and expectations.")}<p class="small">Scores range from 0 lowest impact to 100 highest impact.</p></div><div class="panel"><div class="badge">Primary Finding</div><h2>${f}</h2><p>${text(f)}</p></div></div>
-
-<div class="shareCard" id="shareCard"><h2>OFFICIAL HAIRDEMIC RECORD™</h2><p>Generation One</p><div class="shareScore">${total}</div><p><strong>${lastResult.exp}</strong></p><p>Hairdemic Record Code: ${code}</p><p>Role: ${role}</p><p>Primary Finding: ${f}</p><p class="gold"><strong>The cure is in our hands.</strong></p></div>
-
-<div class="box join"><h2>This Is Bigger Than One Screening.</h2><p></p><p>Your Hairdemic Record™ is more than a screening result. It's the foundation of your long-term Hairdemic journey. Future Hairdemic tools will connect your screening, hair journey, appointments, progress and more through your permanent Hairdemic Record ID.</p><p>You are one of the first voices helping document the state of today's hair industry.</p><p>Every Hairdemic Record strengthens our understanding of today's hair industry.</p><p>Every registered Hairdemic Record helps reveal patterns that have gone unseen for years.</p><p>Together, we're building the evidence needed to create meaningful change.</p><p class="gold"><strong>The cure is in our hands.</strong></p><button class="main" onclick="shareResult()">Create My Share Card</button><button class="main" onclick="showClaimForm()">Join the Hairdemic Movement™</button><p class="small center">Your responses are private until you choose to share them.</p></div><button onclick="location.reload()">Retake Screening</button>`);
-countUp(document.getElementById("mainScore"),total);document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120)}
 function stableRecordCodeFromEmail(email){
 let hash=0;
 for(let i=0;i<email.length;i++){hash=((hash<<5)-hash)+email.charCodeAt(i);hash|=0}
@@ -196,17 +291,61 @@ let n=Math.abs(hash).toString(36).toUpperCase();
 return "HD-"+n.padStart(6,"0").slice(0,6);
 }
 
+function results(){
+let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);
+lastResult={h,t,c,total,f,exp:exposure(total),code:"Pending"};
+wrap(`<div class="resultHero">
+<div class="badge">Official Hairdemic Assessment™</div>
+<div class="resultTag">Your Hairdemic Exposure Reading</div>
+<h1>Hairdemic Impact Index™</h1>
+<div class="index" id="mainScore">0</div>
+<div class="exposure">${lastResult.exp}</div>
+${exposureMeter(total)}
+<p class="statement">${personality(total)}</p>
+</div>
+
+<div class="resultIntro"><div class="box"><h2>You're not imagining it.</h2><p>If you've ever felt like finding a hairstylist shouldn't be this difficult...</p><p>If you've ever wondered why every appointment feels different...</p><p>If you've ever questioned whether hair care still comes first...</p><p><strong>You're not alone.</strong></p><p>Hairdemic is documenting these patterns for the first time.</p></div></div>
+
+<div class="breakdown">
+<div class="panel"><div class="badge">Assessment Breakdown</div>
+${meter("Hair Care Impact",h,"How much the industry's structure has affected your ability to consistently receive hair care as part of your experience.")}
+${meter("Trust Impact",t,"How much your confidence and sense of safety have been affected when choosing hair professionals.")}
+${meter("Consistency Impact",c,"How predictable or unpredictable your hair experiences have been across pricing policies services and expectations.")}
+<p class="small">Scores range from 0 lowest impact to 100 highest impact.</p></div>
+<div class="panel"><div class="badge">Primary Finding</div><h2>${f}</h2><p>${findingText(f)}</p></div>
+</div>
+
+<div class="box join"><h2>This Is Bigger Than One Screening.</h2>
+<p><strong>Your Hairdemic Record™ is more than a screening result. It's the foundation of your long-term Hairdemic journey.</strong></p>
+<p>Future Hairdemic tools will connect your screening hair journey appointments progress and more through your permanent Hairdemic Record ID.</p>
+<p style="font-weight:600;margin-top:22px;color:#d7deeb;">By registering your Hairdemic Record you're helping document the future of the hair industry.</p>
+<ul class="missionList">
+<li><strong>Every Hairdemic Record strengthens our understanding of today's hair industry.</strong></li>
+<li><strong>Every registered Hairdemic Record helps reveal patterns that have gone unseen for years.</strong></li>
+<li><strong>Together we're building the evidence needed to create meaningful change.</strong></li>
+</ul>
+<p class="gold"><strong>The cure is in our hands.</strong></p>
+<button class="main" onclick="shareTextOnly()">Create My Share Card</button>
+<button class="main" onclick="showClaimForm()">Join the Hairdemic Movement</button>
+</div>
+<button onclick="location.reload()">Retake Screening</button>`);
+
+countUp(document.getElementById("mainScore"),total);
+document.querySelectorAll(".miniScore").forEach(el=>countUp(el,Number(el.dataset.score)));
+setTimeout(()=>document.querySelectorAll(".fill").forEach(el=>el.style.width=el.dataset.width),120);
+}
+
 function showClaimForm(){
 wrap(`<div class="center">
-<div class="badge">Claim Your Record</div>
-<h1>Claim My Hairdemic Record™</h1>
-<p>Enter your email to permanently save your Official Hairdemic Record™.</p>
+<div class="badge">Join the Movement</div>
+<h1>Join the Hairdemic Movement</h1>
+<p>Register your Official Hairdemic Record™ and become one of the first voices helping document the state of today's hair industry.</p>
 <div class="box">
-<input id="claimName" class="claimInput" type="text" placeholder="First name optional">
+<input id="claimName" class="claimInput" type="text" placeholder="First Name">
 <input id="claimEmail" class="claimInput" type="email" placeholder="Email address">
 <button class="main" onclick="saveHairdemicRecord()">Register My Record</button>
-<button onclick="results()">Back to Results</button>
-<p class="notice">Your email saves your record so future Hairdemic tools can connect back to your original screening.</p>
+<button onclick="results()">View My Results</button>
+<p class="small">Your email saves your record so future Hairdemic tools can connect back to your original screening.</p>
 </div>
 </div>`);
 }
@@ -214,13 +353,10 @@ wrap(`<div class="center">
 async function saveHairdemicRecord(){
 const firstName=document.getElementById("claimName").value.trim();
 const email=document.getElementById("claimEmail").value.trim().toLowerCase();
-
-if(!email){alert("Please enter your email.");return;}
-if(SUPABASE_URL.includes("PASTE_")||SUPABASE_ANON_KEY.includes("PASTE_")){alert("Supabase is not connected yet. Replace the Supabase URL and Publishable Key in the code.");return;}
-
+if(!firstName||!email){alert("Please enter your first name and email.");return}
+if(SUPABASE_URL.includes("PASTE_")||SUPABASE_ANON_KEY.includes("PASTE_")){alert("Supabase is not connected yet. Replace the Supabase URL and Publishable Key in the code.");return}
 const permanentCode=stableRecordCodeFromEmail(email);
 lastResult.code=permanentCode;
-
 const record={
 first_name:firstName,
 email:email,
@@ -228,182 +364,86 @@ record_code:permanentCode,
 impact_index:lastResult.total,
 exposure:lastResult.exp,
 primary_finding:lastResult.f,
-official_role:lastResult.role,
+official_role:"Founding Voice",
 last_completed_at:new Date().toISOString()
 };
-
-const {error}=await supabaseClient
-.from("hairdemic_records")
-.upsert(record,{onConflict:"email"});
-
-if(error){
-console.log(error);
-alert("Supabase error: " + error.message);
-return;
+const {error}=await supabaseClient.from("hairdemic_records").upsert(record,{onConflict:"email"});
+if(error){alert("Supabase error: "+error.message);return}
+showRegistered(firstName);
 }
 
+function showRegistered(firstName){
 wrap(`<div class="center">
-<div class="badge">Record Claimed</div>
-<h1>Official Hairdemic Record™ Registered.</h1>
-<p>${firstName?`Welcome ${firstName}.`:"Welcome."}</p>
+<div class="badge">Record Registered</div>
+<h1>Official Hairdemic Record™ Registered</h1>
+<p>Welcome ${firstName}.</p>
 <p>Your Official Hairdemic Record™ has been successfully registered.</p>
 <p>You are now a Founding Voice and a Generation One Member helping document the state of today's hair industry.</p>
-<p><strong>Official Status</strong></p>
-<p>✓ Officially Registered</p>
-<p>✓ Founding Voice</p>
-<p>✓ Generation One Member</p>
 <div class="recordCard">
 <div class="badge">Official Hairdemic Record™</div>
-<h2>Hairdemic Record Code</h2>
-<div class="recordCode">${permanentCode}</div>
-<div class="roleSeal">${lastResult.role}</div>
-<div style="margin:20px 0;padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid #2b3347">
-  <div style="display:flex;justify-content:space-between;font-size:13px;color:#b8bfd1;font-weight:bold;margin-bottom:10px">
-<p><strong>Exposure Level:</strong> ${lastResult.exp}</p><p class="gold"><strong>The cure is in our hands.</strong></p>
+<div class="seal">★ Generation One Member</div>
+<h2>Hairdemic Record ID</h2>
+<div class="recordCode">${lastResult.code}</div>
+<div class="recordGrid">
+<div class="recordItem"><span>Status</span><strong>✓ Officially Registered</strong></div>
+<div class="recordItem"><span>Movement Status</span><strong>Founding Voice</strong></div>
+<div class="recordItem"><span>Impact Index</span><strong>${lastResult.total} / 100</strong></div>
+<div class="recordItem"><span>Primary Finding</span><strong>${lastResult.f}</strong></div>
 </div>
-<button class="main" onclick="shareResult()">Create My Share Card</button>
-<button onclick="results()">Back to Results</button>
+<p class="gold"><strong>The cure is in our hands.</strong></p>
+</div>
+<button class="main" onclick="createShareCard()">Create My Share Card</button>
+<button onclick="results()">View My Results</button>
 </div>`);
 }
 
-function shareResult(){
-generateShareImage();
-}
-
-function generateShareImage(){
+function createShareCard(){
 const canvas=document.createElement("canvas");
 const w=1080,h=1920;
-canvas.width=w;
-canvas.height=h;
+canvas.width=w;canvas.height=h;
 const ctx=canvas.getContext("2d");
-
 const grad=ctx.createLinearGradient(0,0,w,h);
-grad.addColorStop(0,"#07080d");
-grad.addColorStop(.45,"#151022");
-grad.addColorStop(1,"#06141b");
-ctx.fillStyle=grad;
-ctx.fillRect(0,0,w,h);
-
-const glow1=ctx.createRadialGradient(120,160,0,120,160,520);
-glow1.addColorStop(0,"rgba(255,47,179,.45)");
-glow1.addColorStop(1,"rgba(255,47,179,0)");
-ctx.fillStyle=glow1;
-ctx.fillRect(0,0,w,h);
-
-const glow2=ctx.createRadialGradient(960,1780,0,960,1780,620);
-glow2.addColorStop(0,"rgba(34,231,255,.34)");
-glow2.addColorStop(1,"rgba(34,231,255,0)");
-ctx.fillStyle=glow2;
-ctx.fillRect(0,0,w,h);
-
-roundRect(ctx,80,120,920,1680,54,"rgba(255,255,255,.055)","rgba(255,255,255,.18)");
-
+grad.addColorStop(0,"#07080d");grad.addColorStop(.45,"#151022");grad.addColorStop(1,"#06141b");
+ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+ctx.fillStyle="rgba(255,47,179,.16)";ctx.beginPath();ctx.arc(130,150,420,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="rgba(34,231,255,.13)";ctx.beginPath();ctx.arc(980,1760,520,0,Math.PI*2);ctx.fill();
+cardBox(ctx,80,120,920,1680,54,"rgba(255,255,255,.055)","rgba(255,255,255,.18)");
 ctx.textAlign="center";
-ctx.fillStyle="#22e7ff";
-ctx.font="700 34px Arial";
-ctx.fillText("OFFICIAL HAIRDEMIC RECORD™",540,215);
-
-ctx.fillStyle="#f5c84b";
-ctx.font="800 38px Arial";
-ctx.fillText("★ GENERATION ONE",540,282);
-
-ctx.fillStyle="#ffffff";
-ctx.font="900 64px Arial";
-wrapCanvasText(ctx,"Hairdemic Impact Index™",540,390,820,72);
-
+ctx.fillStyle="#22e7ff";ctx.font="700 34px Arial";ctx.fillText("OFFICIAL HAIRDEMIC RECORD™",540,215);
+ctx.fillStyle="#f5c84b";ctx.font="800 38px Arial";ctx.fillText("★ GENERATION ONE MEMBER",540,282);
+ctx.fillStyle="#ffffff";ctx.font="900 64px Arial";wrapText(ctx,"Hairdemic Impact Index™",540,390,820,72);
 const scoreGrad=ctx.createLinearGradient(300,500,780,700);
-scoreGrad.addColorStop(0,"#ff315a");
-scoreGrad.addColorStop(.55,"#ff2fb3");
-scoreGrad.addColorStop(1,"#22e7ff");
-ctx.fillStyle=scoreGrad;
-ctx.font="900 230px Arial";
-ctx.fillText(String(lastResult.total),540,670);
-
-ctx.fillStyle="#ffffff";
-ctx.font="900 54px Arial";
-wrapCanvasText(ctx,lastResult.exp,540,760,820,60);
-
-roundRect(ctx,150,870,780,120,28,"rgba(255,255,255,.07)","rgba(34,231,255,.35)");
-ctx.fillStyle="#b8bfd1";
-ctx.font="700 28px Arial";
-ctx.fillText("HAIRDEMIC RECORD CODE",540,918);
-ctx.fillStyle="#ffffff";
-ctx.font="900 42px Arial";
-ctx.fillText(lastResult.code,540,968);
-
-roundRect(ctx,150,1045,780,170,30,"rgba(255,255,255,.07)","rgba(255,47,179,.30)");
-ctx.fillStyle="#b8bfd1";
-ctx.font="700 28px Arial";
-ctx.fillText("OFFICIAL ROLE",540,1100);
-ctx.fillStyle="#ffffff";
-ctx.font="900 46px Arial";
-wrapCanvasText(ctx,lastResult.role,540,1160,700,52);
-
-roundRect(ctx,150,1270,780,190,30,"rgba(255,255,255,.07)","rgba(245,200,75,.32)");
-ctx.fillStyle="#b8bfd1";
-ctx.font="700 28px Arial";
-ctx.fillText("PRIMARY FINDING",540,1325);
-ctx.fillStyle="#ffffff";
-ctx.font="900 43px Arial";
-wrapCanvasText(ctx,lastResult.f,540,1390,700,50);
-
-ctx.fillStyle="#f5c84b";
-ctx.font="900 42px Arial";
-wrapCanvasText(ctx,"The cure is in our hands.",540,1570,780,54);
-
-ctx.fillStyle="#b8bfd1";
-ctx.font="600 30px Arial";
-ctx.fillText("Take the screening",540,1670);
-ctx.fillStyle="#22e7ff";
-ctx.font="800 34px Arial";
-ctx.fillText("thehairdemic.github.io/hairdemic-screening",540,1720);
-
+scoreGrad.addColorStop(0,"#ff315a");scoreGrad.addColorStop(.55,"#ff2fb3");scoreGrad.addColorStop(1,"#22e7ff");
+ctx.fillStyle=scoreGrad;ctx.font="900 230px Arial";ctx.fillText(String(lastResult.total),540,670);
+ctx.fillStyle="#ffffff";ctx.font="900 54px Arial";wrapText(ctx,lastResult.exp,540,760,820,60);
+cardBox(ctx,150,870,780,120,28,"rgba(255,255,255,.07)","rgba(34,231,255,.35)");
+ctx.fillStyle="#b8bfd1";ctx.font="700 28px Arial";ctx.fillText("HAIRDEMIC RECORD ID",540,918);
+ctx.fillStyle="#ffffff";ctx.font="900 42px Arial";ctx.fillText(lastResult.code,540,968);
+cardBox(ctx,150,1045,780,170,30,"rgba(255,255,255,.07)","rgba(255,47,179,.30)");
+ctx.fillStyle="#b8bfd1";ctx.font="700 28px Arial";ctx.fillText("MOVEMENT STATUS",540,1100);
+ctx.fillStyle="#ffffff";ctx.font="900 46px Arial";ctx.fillText("Founding Voice",540,1160);
+cardBox(ctx,150,1270,780,190,30,"rgba(255,255,255,.07)","rgba(245,200,75,.32)");
+ctx.fillStyle="#b8bfd1";ctx.font="700 28px Arial";ctx.fillText("PRIMARY FINDING",540,1325);
+ctx.fillStyle="#ffffff";ctx.font="900 43px Arial";wrapText(ctx,lastResult.f,540,1390,700,50);
+ctx.fillStyle="#f5c84b";ctx.font="900 42px Arial";wrapText(ctx,"The cure is in our hands.",540,1570,780,54);
+ctx.fillStyle="#22e7ff";ctx.font="800 34px Arial";ctx.fillText("thehairdemic.github.io/hairdemic-screening",540,1715);
 canvas.toBlob(async(blob)=>{
 const file=new File([blob],"hairdemic-record.png",{type:"image/png"});
-if(navigator.canShare && navigator.canShare({files:[file]})){
-  await navigator.share({title:"My Official Hairdemic Record™",text:"I just completed my Official Hairdemic Record™. The cure is in our hands.",files:[file]});
-}else{
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="hairdemic-record.png";
-  a.click();
-  alert("Your image card downloaded. Share it to your story or post.");
-}
+if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:"My Official Hairdemic Record™",text:"I just registered my Official Hairdemic Record™. The cure is in our hands.",files:[file]})}
+else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="hairdemic-record.png";a.click();alert("Your image card downloaded. Share it to your story or post.")}
 },"image/png");
 }
 
-function roundRect(ctx,x,y,w,h,r,fill,stroke){
-ctx.beginPath();
-ctx.moveTo(x+r,y);
-ctx.lineTo(x+w-r,y);
-ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-ctx.lineTo(x+w,y+h-r);
-ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-ctx.lineTo(x+r,y+h);
-ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-ctx.lineTo(x,y+r);
-ctx.quadraticCurveTo(x,y,x+r,y);
-ctx.closePath();
-ctx.fillStyle=fill;
-ctx.fill();
-if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}
+function shareTextOnly(){
+const text=`I took the Hairdemic Screening™. My Hairdemic Impact Index™ is ${lastResult.total}. ${lastResult.exp}. Primary Finding: ${lastResult.f}. The cure is in our hands.`;
+if(navigator.share){navigator.share({title:"My Hairdemic Results",text:text,url:location.href}).catch(()=>{})}
+else{navigator.clipboard.writeText(text).then(()=>alert("Your share text was copied."))}
 }
 
-function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight){
-const words=String(text).split(" ");
-let line="";
-for(let n=0;n<words.length;n++){
-  const testLine=line+words[n]+" ";
-  if(ctx.measureText(testLine).width>maxWidth && n>0){
-    ctx.fillText(line,x,y);
-    line=words[n]+" ";
-    y+=lineHeight;
-  }else{
-    line=testLine;
-  }
-}
-ctx.fillText(line,x,y);
-}
+function cardBox(ctx,x,y,w,h,r,fill,stroke){
+ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke()}}
+function wrapText(ctx,text,x,y,maxWidth,lineHeight){const words=String(text).split(" ");let line="";for(let n=0;n<words.length;n++){const test=line+words[n]+" ";if(ctx.measureText(test).width>maxWidth&&n>0){ctx.fillText(line,x,y);line=words[n]+" ";y+=lineHeight}else{line=test}}ctx.fillText(line,x,y)}
+
 home();
 </script>
 </body>
