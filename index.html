@@ -144,7 +144,25 @@ function results(){
 let h=avg(scores.hairCare),t=avg(scores.trust),c=avg(scores.consistency),total=Math.round((h+t+c)/3),f=primary(h,t,c);
 let role=roleForFinding(f),code=recordCode();
 lastResult={h,t,c,total,f,exp:exposure(total),role,code};
-wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment™</div><div class="resultTag">Your Hairdemic Exposure Reading</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div><p class="statement">${personality(total)}</p></div>
+wrap(`<div class="resultHero"><div class="badge">Official Hairdemic Assessment™</div><div class="resultTag">Your Hairdemic Exposure Reading</div><h1>Hairdemic Impact Index™</h1><div class="index" id="mainScore">0</div><div class="exposure">${lastResult.exp}</div>
+
+<div style="margin:20px auto;padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid #2b3347;max-width:760px">
+  <div style="display:flex;justify-content:space-between;font-size:13px;color:#b8bfd1;font-weight:bold;margin-bottom:10px">
+    <span>Hairdemic Exposure™</span>
+    <span>${total} / 100</span>
+  </div>
+
+  <div style="position:relative;height:16px;border-radius:999px;background:linear-gradient(90deg,#35d07f,#f5c84b,#ff8a3d,#ff315a);overflow:visible">
+    <div style="position:absolute;left:${total}%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:white;border:5px solid #07080d;box-shadow:0 0 24px rgba(255,255,255,.55)"></div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;color:#b8bfd1;font-size:12px;margin-top:12px">
+    <span>Mild</span>
+    <span>Moderate</span>
+    <span>High</span>
+    <span>Severe</span>
+  </div>
+</div><p class="statement">${personality(total)}</p></div>
 
 <div class="recordCard">
 <div class="badge">Official Hairdemic Record™</div>
@@ -241,19 +259,6 @@ wrap(`<div class="center">
 <div class="roleSeal">${lastResult.role}</div>
 <div style="margin:20px 0;padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid #2b3347">
   <div style="display:flex;justify-content:space-between;font-size:13px;color:#b8bfd1;font-weight:bold;margin-bottom:10px">
-    <span>Hairdemic Exposure™</span>
-    <span>${lastResult.total} / 100</span>
-  </div>
-  <div style="position:relative;height:16px;border-radius:999px;background:linear-gradient(90deg,#35d07f,#f5c84b,#ff8a3d,#ff315a)">
-    <div style="position:absolute;left:${lastResult.total}%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:white;border:5px solid #07080d"></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;color:#b8bfd1;font-size:12px;margin-top:12px">
-    <span>Mild</span>
-    <span>Moderate</span>
-    <span>High</span>
-    <span>Severe</span>
-  </div>
-</div>
 <p><strong>Exposure Level:</strong> ${lastResult.exp}</p><p class="gold"><strong>The cure is in our hands.</strong></p>
 </div>
 <button class="main" onclick="shareResult()">Create My Share Card</button>
