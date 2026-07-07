@@ -186,7 +186,7 @@ wrap(`<div class="center">
 <div class="box">
 <input id="claimName" class="claimInput" type="text" placeholder="First name optional">
 <input id="claimEmail" class="claimInput" type="email" placeholder="Email address">
-<button class="main" onclick="saveHairdemicRecord()">Save My Record</button>
+<button class="main" onclick="saveHairdemicRecord()">Register My Record</button>
 <button onclick="results()">Back to Results</button>
 <p class="notice">Your email saves your record so future Hairdemic tools can connect back to your original screening.</p>
 </div>
@@ -226,8 +226,14 @@ return;
 
 wrap(`<div class="center">
 <div class="badge">Record Claimed</div>
-<h1>Your Hairdemic Record™ is saved.</h1>
-<p>${firstName?`Welcome ${firstName}.`:"Welcome."} You are a Founding Voice.</p>
+<h1>Official Hairdemic Record™ Registered.</h1>
+<p>${firstName?`Welcome ${firstName}.`:"Welcome."}</p>
+<p>Your Official Hairdemic Record™ has been successfully registered.</p>
+<p>You are now a Founding Voice and a Generation One Member helping document the state of today's hair industry.</p>
+<p><strong>Official Status</strong></p>
+<p>✓ Officially Registered</p>
+<p>✓ Founding Voice</p>
+<p>✓ Generation One Member</p>
 <div class="recordCard">
 <div class="badge">Official Hairdemic Record™</div>
 <h2>Hairdemic Record Code</h2>
